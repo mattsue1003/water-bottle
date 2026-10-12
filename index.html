@@ -62,6 +62,38 @@ section{padding:56px 0}
 .scale .w{font-weight:700;color:var(--teal-deep);text-align:right}
 .scale small{color:var(--mute);font-size:.9rem;display:block;margin-top:8px;line-height:1.5}
 
+/* checker */
+.clab{display:block;font-weight:700;color:var(--teal-deep);margin:10px 0 6px}
+.cbtns{display:flex;flex-wrap:wrap;gap:6px}
+.cbtns button{border:1.5px solid var(--line);background:var(--bg);color:var(--ink-2);border-radius:999px;padding:5px 14px;font-weight:600}
+.cbtns button.on{background:var(--teal);border-color:var(--teal);color:#fff}
+#cReps{width:100%;accent-color:var(--orange);margin:4px 0 12px}
+.cres{border-radius:14px;padding:14px 16px;font-size:1.05rem;line-height:1.55;background:var(--amber-soft);border-left:6px solid var(--amber)}
+.cres.ok{background:#e4f5ea;border-color:var(--ok)}
+.cres.heavy{background:#fde8e2;border-color:var(--orange)}
+.cres b{display:block;font-size:1.2rem;margin-bottom:4px}
+:root[data-theme="dark"] .cres.ok{background:#17402a}
+:root[data-theme="dark"] .cres.heavy{background:#4a2418}
+
+/* evidence glossary */
+.gloss{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:24px}
+.gloss h3{color:var(--teal-deep)}
+.gloss .g2{display:grid;grid-template-columns:1.1fr 1fr;gap:22px}
+.ladder{display:grid;gap:6px}
+.ladder .lv{display:grid;grid-template-columns:4.6em 1fr auto;gap:10px;align-items:center;padding:8px 12px;border-radius:10px;background:var(--bg)}
+.ladder .lv .n{font-weight:900;color:var(--teal-deep)}
+.ladder .lv .v{font-size:.9rem;font-weight:700;border-radius:8px;padding:2px 10px;white-space:nowrap}
+.v1{background:#e4f5ea;color:#1f6b40}.v2{background:#e6f1fb;color:#1b4e8a}.v3{background:var(--amber-soft);color:#8a5a0b}.v4{background:#eef0f2;color:#4a5a60}
+.ladder .lv.hi{outline:2px solid var(--teal)}
+:root[data-theme="dark"] .v1{background:#17402a;color:#9fe3bb}:root[data-theme="dark"] .v2{background:#16304a;color:#a9cdf5}:root[data-theme="dark"] .v3{color:#ffd58a}:root[data-theme="dark"] .v4{background:#263b41;color:#b9ccd1}
+.gloss dl{margin:0}
+.gloss dt{font-weight:700;color:var(--teal-deep);margin-top:10px}
+.gloss dd{margin:2px 0 0}
+.evc dl{grid-template-columns:6.5em 1fr}
+.evc dd ul{margin:.2em 0 0;padding-left:1.1em}
+.evc dd li{margin:.2em 0}
+@media (max-width:860px){.gloss .g2{grid-template-columns:1fr}.evc dl{grid-template-columns:1fr}}
+
 /* two-column pros/cons */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
@@ -221,13 +253,16 @@ footer b{color:var(--ink-2)}
         <a class="cta alt" href="#evidence">先看輕重量有沒有效</a>
       </div>
     </div>
-    <div class="scale" aria-label="常見瓶裝水重量">
-      <h3>瓶子多大，就是多重</h3>
-      <div class="row"><span>350 ml</span><div class="bar" style="width:23%"></div><span class="w">約 0.4 kg</span></div>
-      <div class="row"><span>600 ml</span><div class="bar" style="width:40%"></div><span class="w">約 0.6 kg</span></div>
-      <div class="row"><span>1000 ml</span><div class="bar" style="width:67%"></div><span class="w">約 1.0 kg</span></div>
-      <div class="row"><span>1500 ml</span><div class="bar" style="width:100%"></div><span class="w">約 1.5 kg</span></div>
-      <small>水 1 公升約 1 公斤。裝細沙或米可以更重：同一個 600 ml 瓶子裝滿乾沙約 0.9 kg。瓶蓋務必鎖緊、用膠帶再纏一圈。</small>
+    <div class="scale" id="checker">
+      <h3>我的瓶子夠重嗎？</h3>
+      <p class="note" style="margin:0 0 10px">拿起你準備的瓶子，做「肩上推」或「二頭彎舉」，連續做到很吃力為止，數一下做了幾下。</p>
+      <label class="clab">瓶子大小</label>
+      <div class="cbtns" id="cSize">
+        <button type="button" data-v="0.35">350 ml</button><button type="button" class="on" data-v="0.6">600 ml</button><button type="button" data-v="1">1 L</button><button type="button" data-v="1.5">1.5 L</button><button type="button" data-v="2">裝沙 600 ml</button>
+      </div>
+      <label class="clab" for="cReps">做到第幾下才覺得很吃力：<b id="cRepsV">25</b> 下</label>
+      <input type="range" id="cReps" min="4" max="45" value="25">
+      <div class="cres" id="cRes"></div>
     </div>
   </div>
 </section>
@@ -276,7 +311,36 @@ footer b{color:var(--ink-2)}
 <section id="evidence">
   <div class="wrap">
     <h2>輕重量真的有效嗎？研究怎麼說</h2>
-    <p class="lead">你記得的那篇研究確實存在，而且不只一篇。近十年的統合分析一致指出：<strong>只要每組做到接近力竭（很吃力、快做不動），輕重量和重重量在增加肌肉量上的效果相近；但在最大肌力上，重重量仍略勝一籌。</strong>以下依證據等級排列，並說明每篇研究是怎麼做的。</p>
+    <p class="lead">你記得的那篇研究確實存在，而且不只一篇。近十年的研究一致指出：<strong>只要每組做到接近力竭（很吃力、快做不動），輕重量和重重量在增加肌肉量上的效果相近；但在最大肌力上，重重量仍略勝一籌。</strong>在看研究之前，先把三個會一直出現的名詞講清楚。</p>
+
+    <div class="gloss">
+      <h3>先看懂三個名詞</h3>
+      <div class="g2">
+        <div>
+          <dl>
+            <dt>1RM 是什麼？</dt>
+            <dd>RM 是 Repetition Maximum，「最多能做幾下的重量」。1RM 就是你用盡全力只能舉起 1 下的重量，是肌力訓練的計算基準。例如某人肩推 1RM 是 10 公斤，那「60% 1RM」就是 6 公斤；重量越輕，能做的下數越多：大約 80% 1RM 可做 8 下、60% 可做 15 下、30% 可做 30 下以上。<strong>研究裡說的「輕負荷」通常是 60% 1RM 以下，也就是能做 15 下以上的重量；水瓶對多數長輩來說大多落在這一區。</strong></dd>
+            <dt>力竭（做到接近力竭）是什麼？</dt>
+            <dd>指一組做到「再做 1、2 下姿勢就會跑掉」的程度，不是做到完全舉不起來。這是輕重量能不能有效的關鍵條件。</dd>
+            <dt>統合分析、網絡統合分析、隨機對照試驗</dt>
+            <dd><strong>隨機對照試驗（RCT）</strong>：把受試者隨機分組，一組做 A、一組做 B，比較結果；隨機分組可以排除「本來就比較強的人剛好都在某一組」的干擾。<strong>統合分析</strong>：把許多篇 RCT 的數據合在一起重新計算，等於用更多人數來回答同一個問題，比單篇研究更可信。<strong>網絡統合分析</strong>：一次比較三種以上的做法（例如低、中、高負荷），即使有些研究只比過其中兩種，也能透過共同的比較對象把全部串起來。</dd>
+          </dl>
+        </div>
+        <div>
+          <p style="font-weight:700;color:var(--teal-deep);margin-bottom:8px">證據等級代表什麼？（牛津實證醫學中心分級）</p>
+          <p class="note">數字越小、字母越前面，代表研究設計越嚴謹、越不容易被偶然或偏見影響，<strong>參考價值越高</strong>。本頁引用的四篇都在最高的兩級。</p>
+          <div class="ladder">
+            <div class="lv hi"><span class="n">1a</span><span>多篇隨機對照試驗的系統性回顧或統合分析</span><span class="v v1">參考價值最高</span></div>
+            <div class="lv hi"><span class="n">1b</span><span>單篇設計良好的隨機對照試驗</span><span class="v v1">參考價值高</span></div>
+            <div class="lv"><span class="n">2a / 2b</span><span>世代研究（長期追蹤一群人，但沒有隨機分組）</span><span class="v v2">中等偏高</span></div>
+            <div class="lv"><span class="n">3</span><span>病例對照研究（回頭比較有結果和沒結果的人）</span><span class="v v3">中等</span></div>
+            <div class="lv"><span class="n">4</span><span>病例系列、沒有對照組的觀察</span><span class="v v3">偏低</span></div>
+            <div class="lv"><span class="n">5</span><span>專家意見、經驗分享、理論推論</span><span class="v v4">最低，僅供參考</span></div>
+          </div>
+          <p class="note" style="margin-top:10px">等級高不等於「一定對」。還要看研究對象像不像你的學員（年輕人還是長者）、人數多不多、結果在不同研究間是否一致。所以每篇下面都另外寫了「可信在哪、要小心哪裡」。</p>
+        </div>
+      </div>
+    </div>
 
     <div class="ev">
       <div class="evc">
@@ -286,14 +350,17 @@ footer b{color:var(--ink-2)}
           <span class="badge b3">對象：健康成人</span>
         </div>
         <div>
-          <h3>輕重量 vs 重重量：肌肥大相近，最大肌力重重量較佳</h3>
+          <h3>輕重量 vs 重重量：肌肉量增加相近，最大肌力重重量較佳</h3>
           <div class="cite">Schoenfeld BJ, Grgic J, Ogborn D, Krieger JW. J Strength Cond Res. 2017;31(12):3508–3523.</div>
           <dl>
-            <dt>怎麼做的</dt><dd>系統性回顧 21 篇隨機對照試驗。條件：比較輕負荷（≤60% 1RM，約可做 15 下以上）與重負荷（＞60% 1RM）、<strong>每一組都做到暫時力竭</strong>、訓練至少 6 週、受試者無限制訓練的傷病。</dd>
-            <dt>結果</dt><dd>肌肉量增加兩組沒有顯著差異；1RM 最大肌力重負荷組顯著較高，等長肌力則無差異。</dd>
-            <dt>品質</dt><dd>納入研究多為小樣本（每組約 10–20 人），對象以年輕成人為主；但結論在後續多篇統合分析中重複出現，一致性高。</dd>
+            <dt>研究對象</dt><dd>21 篇隨機對照試驗加起來的受試者，多數是沒有傷病的年輕成人（大學生、一般健康人），每篇每組大約 10–20 人。</dd>
+            <dt>怎麼比較</dt><dd>每篇研究都把人分成兩組：一組用<strong>輕重量</strong>（能做 15 下以上的重量），一組用<strong>重重量</strong>（能做 12 下以內的重量）。兩組做一樣的動作、一樣的組數，<strong>而且每一組都做到接近力竭</strong>；只有重量和下數不同。訓練至少 6 週。</dd>
+            <dt>怎麼量</dt><dd>訓練前後測量肌肉有沒有變大（超音波或影像量肌肉厚度、橫截面積），以及肌力有沒有進步（1RM 最大肌力，另外也測不動關節出力的「等長肌力」）。</dd>
+            <dt>結果</dt><dd><ul><li><strong>肌肉變大的程度：兩組一樣。</strong>輕重量做到力竭，肌肉長得和重重量一樣多。</li><li><strong>最大肌力（1RM）：重重量組進步明顯比較多。</strong>要舉得重，就得練得重。</li><li>等長肌力（用力撐住不動）：兩組沒有差別。</li></ul></dd>
+            <dt>可信在哪</dt><dd>它不是單一研究，而是把 21 篇合起來看；而且納入條件嚴格，排除了「沒做到力竭」的研究，所以答的是乾淨的問題。後來幾篇統合分析都得到同樣結論，一致性高。</dd>
+            <dt>要小心哪裡</dt><dd>對象是年輕人，不是長者；每篇人數都少；追蹤時間多在 6–12 週，更長期會不會不同還不知道。</dd>
           </dl>
-          <div class="so">對社區課的意義：水瓶可以增肌，前提是每組要做到「很吃力」。只是如果目標是提重物、搬東西那種最大力量，重的器材仍比較有效。</div>
+          <div class="so">對社區課的意義：水瓶可以增肌，前提是每組要做到「很吃力」。如果長輩的目標是提重物那種最大力量，重的器材仍比較有效。</div>
         </div>
       </div>
 
@@ -304,14 +371,16 @@ footer b{color:var(--ink-2)}
           <span class="badge b3">對象：健康成人</span>
         </div>
         <div>
-          <h3>低、中、高負荷三組比較：肌肥大不分輕重，肌力隨負荷遞增</h3>
+          <h3>低、中、高負荷三組一起比：肌肉量不分輕重，肌力隨負荷遞增</h3>
           <div class="cite">Lopez P, Radaelli R, Taaffe DR, et al. Med Sci Sports Exerc. 2021;53(6):1206–1216.</div>
           <dl>
-            <dt>怎麼做的</dt><dd>納入 28 篇研究、747 位健康成人，所有組別都訓練到自覺力竭；用網絡統合分析同時比較低負荷（<60% 1RM）、中負荷（60–79%）與高負荷（≥80%）。</dd>
-            <dt>結果</dt><dd>肌肥大三組相近；最大肌力高負荷與中負荷都優於低負荷（標準化效應量約 0.6 與 0.35），高負荷略優於中負荷但未達顯著。未受訓者肌肥大反應較大。</dd>
-            <dt>品質</dt><dd>有做高品質研究的次群組分析，結果一致；仍以年輕與中年成人為主，直接推論到 80 歲以上需保守。</dd>
+            <dt>研究對象</dt><dd>28 篇研究、共 747 位健康成人，以年輕與中年人為主。</dd>
+            <dt>怎麼比較</dt><dd>把重量分成三級：<strong>低負荷</strong>（60% 1RM 以下，約可做 15 下以上）、<strong>中負荷</strong>（60–79%，約可做 8–15 下）、<strong>高負荷</strong>（80% 以上，約可做 8 下以內）。所有組別都做到力竭。用「網絡統合分析」把三級一起排名，另外只挑品質高的研究再算一次，確認結果不變。</dd>
+            <dt>結果</dt><dd><ul><li><strong>肌肉變大：三級一樣。</strong>只要做到力竭，重量輕重不影響肌肉長多少。</li><li><strong>肌力：越重進步越多。</strong>高負荷和中負荷都明顯贏過低負荷；高負荷又比中負荷好一點，但差距不大。</li><li>以前沒練過的人，肌肉變大的反應更明顯。</li></ul></dd>
+            <dt>可信在哪</dt><dd>人數是這類研究中最多的；三級同時比較，比「輕 vs 重」兩分法更細；高品質研究單獨分析後結論相同。</dd>
+            <dt>要小心哪裡</dt><dd>仍然是年輕與中年人為主，直接套用到 80 歲以上要保守。</dd>
           </dl>
-          <div class="so">對社區課的意義：把水瓶從 600 ml 換到 1.5 L（往「中負荷」靠近），長輩的肌力進步會更明顯；肌肉量則靠組數與吃力度。</div>
+          <div class="so">對社區課的意義：把水瓶從 600 ml 換到 1.5 L，就是從「低負荷」往「中負荷」移動，長輩的肌力進步會更明顯；肌肉量則靠組數與吃力度。</div>
         </div>
       </div>
 
@@ -322,14 +391,16 @@ footer b{color:var(--ink-2)}
           <span class="badge b3">對象：平均 67.8 歲長者</span>
         </div>
         <div>
-          <h3>專門看長者：中輕負荷只要次數夠，肌力也能明顯進步</h3>
+          <h3>專門看長者：中輕負荷只要下數做夠，肌力一樣能明顯進步</h3>
           <div class="cite">Csapo R, Alegre LM. Scand J Med Sci Sports. 2016;26(9):995–1006.</div>
           <dl>
-            <dt>怎麼做的</dt><dd>統合 15 篇長者研究、448 人（平均 67.8 歲），比較重負荷（約 80% 1RM）與中輕負荷（約 45% 1RM）；另外單獨分析「總作功量相同」的研究，排除做得比較多的干擾。</dd>
-            <dt>結果</dt><dd>重負荷在肌力上有「略優」趨勢（效應量 0.43，p=0.06）；作功量相同的研究中差距更小（0.30）。肌肉量增加兩組都很小，重負荷略多。作者結論：只要做足夠次數，低於傳統建議的負荷也能在長者身上帶來可觀的肌力進步。</dd>
-            <dt>品質</dt><dd>目前最貼近社區長者的統合分析；納入研究之間的訓練安排差異大，肌肉量測量方法不一，解讀時以「肌力」結論為主。</dd>
+            <dt>研究對象</dt><dd>15 篇長者研究、共 448 人，平均 67.8 歲，和社區據點的學員最接近。</dd>
+            <dt>怎麼比較</dt><dd>一組用<strong>重負荷</strong>（約 80% 1RM，一組做 8 下左右），一組用<strong>中輕負荷</strong>（約 45% 1RM，一組做 15–25 下）。研究者特別把「兩組總作功量一樣」的研究（輕的那組做比較多下，把重量×下數補到相同）另外拿出來算，避免「輕的組只是做比較少」的干擾。</dd>
+            <dt>結果</dt><dd><ul><li><strong>肌力：重負荷只有「略好一點」的趨勢，沒有達到統計上的顯著。</strong>當兩組作功量相同時，差距更小。</li><li><strong>肌肉量：兩組增加都很少</strong>，重負荷多一點點，但長者本來肌肉就長得慢。</li><li>作者結論：只要做足夠的下數，比傳統建議更輕的重量也能讓長者的肌力明顯進步。</li></ul></dd>
+            <dt>可信在哪</dt><dd>目前最貼近社區長者的統合分析，而且有做「作功量相同」的獨立分析。</dd>
+            <dt>要小心哪裡</dt><dd>各篇的訓練安排差異大（週數、組數不一），肌肉量的測量方法也不同；解讀時以「肌力」這個結論為主。</dd>
           </dl>
-          <div class="so">對社區課的意義：這篇最直接支持水瓶課程。關鍵詞是「足夠的次數」，也就是別停在 10 下，做到吃力為止。</div>
+          <div class="so">對社區課的意義：這篇最直接支持水瓶課程。關鍵詞是「足夠的下數」，也就是別停在 10 下，做到吃力為止。</div>
         </div>
       </div>
 
@@ -340,12 +411,14 @@ footer b{color:var(--ink-2)}
           <span class="badge b3">對象：年輕成人</span>
         </div>
         <div>
-          <h3>輕重量「不做到力竭」就沒效：力竭是輕重量的必要條件</h3>
+          <h3>輕重量「沒做到力竭」就沒效：力竭是輕重量的必要條件</h3>
           <div class="cite">Lasevicius T, Schoenfeld BJ, Silva-Batista C, et al. J Strength Cond Res. 2022;36(2):346–351.</div>
           <dl>
-            <dt>怎麼做的</dt><dd>受試者兩腿分別做不同條件的腿伸展訓練 8 週，比較高負荷（80% 1RM）與低負荷（30% 1RM）、各自「做到力竭」與「不做到力竭」共四種情況，測量股四頭肌橫截面積與肌力。</dd>
-            <dt>結果</dt><dd>高負荷不論是否力竭，肌肥大相近；低負荷做到力竭的肌肥大與高負荷相近，但低負荷沒做到力竭的肌肥大明顯較少。</dd>
-            <dt>品質</dt><dd>樣本小、對象為年輕人，但設計乾淨（同一人兩腿對照），直接回答了「輕重量為什麼要做到累」這個問題。</dd>
+            <dt>研究對象</dt><dd>約 25 位沒練過的年輕男性，訓練 8 週，每週 2 次，動作是坐姿腿伸直（練大腿前側）。</dd>
+            <dt>怎麼比較</dt><dd>很聰明的設計：<strong>同一個人的兩條腿做不同條件</strong>，一腿重、一腿輕，這樣體質、飲食、睡眠完全相同，差別只在訓練方式。再把人分成兩群：一群<strong>每組做到力竭</strong>，一群<strong>還沒到吃力就停</strong>（每組下數明顯少於力竭組）。合起來就是四種情況：重×力竭、重×不力竭、輕×力竭、輕×不力竭。</dd>
+            <dt>結果</dt><dd><ul><li><strong>重重量：不管有沒有做到力竭，肌肉都長得差不多。</strong>重量本身就夠刺激。</li><li><strong>輕重量做到力竭：肌肉長得和重重量一樣多。</strong></li><li><strong>輕重量沒做到力竭：肌肉明顯長得少。</strong>這是四組裡最差的。</li></ul></dd>
+            <dt>可信在哪</dt><dd>同一人兩腿對照，干擾最少；四種情況同時比，直接回答了「輕重量為什麼一定要做到累」。</dd>
+            <dt>要小心哪裡</dt><dd>人數少、只練一個動作、對象是年輕男性，不能直接說長者也一模一樣。</dd>
           </dl>
           <div class="so">對社區課的意義：帶水瓶課最怕「大家輕鬆做完 10 下就換動作」。輕重量的效果幾乎全靠最後那幾下。</div>
         </div>
@@ -411,10 +484,10 @@ footer b{color:var(--ink-2)}
 <section id="db">
   <div class="wrap">
     <h2>影片資料庫</h2>
-    <p class="lead">以下都是實際存在的 YouTube 影片與播放清單，涵蓋台灣、香港、日本與歐美。點縮圖可在頁面內播放；每支影片附「帶班筆記」說明怎麼用在社區課，也可以寫下自己的備註、收藏，或加入自己找到的影片。</p>
+    <p class="lead">以下都是實際存在的 YouTube 影片，每一支都以水瓶或輕啞鈴為器材（啞鈴影片皆可直接換成水瓶），涵蓋台灣、香港、日本、韓國、美國澳洲與德國，讓老師可以比較不同地區的動作設計與帶領方式。點縮圖可在頁面內播放；每支影片附「帶班筆記」說明怎麼用在社區課，也可以寫下自己的備註、收藏，或加入自己找到的影片。</p>
 
     <div class="tools">
-      <input class="search" id="q" type="search" placeholder="搜尋：寶特瓶、坐姿、下肢、有氧、握力、日本…" aria-label="搜尋影片">
+      <input class="search" id="q" type="search" placeholder="搜尋：寶特瓶、坐姿、下肢、握力、德國、日本…" aria-label="搜尋影片">
       <button class="ftoggle on" id="ftoggle" type="button" aria-expanded="true">篩選條件 ▴</button>
       <span class="count" id="count"></span>
       <div class="active" id="active"></div>
@@ -443,7 +516,7 @@ footer b{color:var(--ink-2)}
         <div><label>姿勢</label><select name="posture"><option>坐姿</option><option>站姿</option><option>坐站混合</option><option>臥姿</option></select></div>
         <div><label>主要目標</label><select name="goal"><option>肌力</option><option>有氧律動</option><option>上下肢結合</option><option>握力與手部</option><option>暖身伸展</option></select></div>
         <div><label>器材</label><select name="equip"><option>影片使用水瓶</option><option>影片使用啞鈴，可換水瓶</option><option>徒手或椅子，可加水瓶</option></select></div>
-        <div><label>語區</label><select name="region"><option>台灣</option><option>香港</option><option>日本</option><option>歐美</option><option>其他</option></select></div>
+        <div><label>語區</label><select name="region"><option>台灣</option><option>香港</option><option>日本</option><option>韓國</option><option>美國澳洲</option><option>歐洲</option><option>其他</option></select></div>
         <div><label>長度</label><select name="len"><option>短片（5 分鐘內）</option><option>中片（5–15 分鐘）</option><option>長片（15 分鐘以上）</option><option>播放清單</option></select></div>
         <div><label>頻道或來源</label><input name="channel" placeholder="例：某某據點"></div>
         <div class="full"><label>帶班筆記</label><textarea name="note" rows="2" placeholder="這支影片適合用在課程哪個段落？要注意什麼？"></textarea></div>
@@ -502,62 +575,80 @@ footer b{color:var(--ink-2)}
 <script>
 /* ---------- 內建影片資料（皆為實際存在之 YouTube 影片） ---------- */
 const BUILT_IN = [
- {id:"22OrKhqcKf0",type:"v",title:"長者輕鬆水樽運動（完整版）",channel:"升級教練 Lawrence Lai",region:"香港",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
-  note:"整套用水樽，下身有原地快步行、蹲、髖外展，上身有肩上舉、肩外展、夾胸、夾背。是本資料庫最接近「水瓶＋上下肢結合」的範本，適合當整堂課的主幹。"},
+ /* 台灣 */
  {id:"T6lxOVduTI4",type:"v",title:"10 分鐘肌力訓練｜新手、老人運動｜全站立全身｜預防肌少症",channel:"1M6FIT",region:"台灣",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"影片說明直接寫「可搭配寶特瓶或啞鈴」。夾胸肩推、深蹲等動作節奏偏快，社區課建議把速度放慢一半、站在椅子前做。"},
  {id:"oleckDQ49KE",type:"v",title:"20 分鐘全身雕塑｜壺鈴或寶特瓶｜全站立｜含暖身與伸展",channel:"1M6FIT",region:"台灣",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"長片（15 分鐘以上）",
   note:"單一大瓶（1.5–2 L）的用法示範，適合體能較好的長輩或課程後段的進階組；蹲與推結合的動作多，老師可挑 3–4 個動作拆出來用。"},
  {id:"IEjkfmvqIV8",type:"v",title:"靠寶特瓶 2 招免花錢鍛鍊握力肌｜劉燦宏醫師 X 李杰教練",channel:"早安健康",region:"台灣",posture:"坐姿",goal:["握力與手部"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"握力是 ICOPE 與肌少症篩檢的指標，這支用寶特瓶做手腕與前臂訓練，適合放在課程開頭 3 分鐘當「手部暖機」。"},
- {id:"X9oDtVUhUB8",type:"v",title:"中高齡運動｜坐姿肌力運動｜上肢肌力訓練（20 分鐘）",channel:"居家運動系列",region:"台灣",posture:"坐姿",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"長片（15 分鐘以上）",
-  note:"整支坐著做的上肢肌力課，動作順序可直接套用；每個動作讓學員手持水瓶即可增加負荷。"},
- {id:"JBlgmgeTJbg",type:"v",title:"中高齡運動｜下肢肌力訓練｜站姿肌力訓練（20 分鐘）",channel:"居家運動系列",region:"台灣",posture:"站姿",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"長片（15 分鐘以上）",
-  note:"有章節與安全提醒。站姿抬膝、蹲等動作，手持水瓶抱胸就能變成上下肢結合。"},
- {id:"G-jYYCDmb-g",type:"v",title:"中高齡運動｜座椅下肢肌力訓練",channel:"居家運動系列",region:"台灣",posture:"坐姿",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
-  note:"坐著練大腿與小腿。把瓶子放在大腿上做膝伸直、或雙膝夾瓶，就是坐姿的下肢加負荷方式。"},
  {id:"ldTnHnS6EDQ",type:"v",title:"年長者也能開始的啞鈴訓練｜從挑選重量到入門動作",channel:"YouTube 教練頻道",region:"台灣",posture:"坐站混合",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"重點在「怎麼挑重量」，老師看完可以把挑重量的原則翻譯成挑瓶子的原則（做 12–15 下會累就對了）。"},
- {id:"nbgF_8kinjg",type:"v",title:"年長者的肌力訓練！三個初學者必做下肢動作",channel:"北木健身",region:"台灣",posture:"坐站混合",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
-  note:"只需一張椅子的三個下肢動作，講解清楚。學員熟練後，抱瓶做坐站就是最自然的進階。"},
- {id:"Viygoxi77Fw",type:"v",title:"110 年運動月：樂齡族下肢肌力訓練",channel:"臺北市政府體育局",region:"台灣",posture:"坐站混合",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
-  note:"公部門製作、動作保守安全，適合當第一堂課的下肢基礎，之後再加瓶子。"},
- {id:"7pIeSsndwbA",type:"v",title:"高齡者有氧運動健康操",channel:"臺北市政府衛生局（臺師大規劃）",region:"台灣",posture:"站姿",goal:["有氧律動"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
-  note:"有氧段落用：請學員手持小瓶（350–600 ml）跟著做，上肢在有氧時也有負荷。"},
- {id:"9P8CDMj6qgw",type:"v",title:"銀髮族簡易運動",channel:"中國醫藥大學附設醫院 家庭醫學科",region:"台灣",posture:"坐站混合",goal:["暖身伸展","肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
-  note:"醫院製作的居家基礎動作，可當課程暖身或給家屬回家練習的參考。"},
- {id:"fgxcywgq5JE",type:"v",title:"坐姿伸展有氧運動，12 分鐘鍛鍊全身",channel:"中高齡體育課",region:"台灣",posture:"坐姿",goal:["有氧律動","暖身伸展"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
-  note:"專為坐著運動設計、不是站姿的簡化版。節奏溫和，適合坐輪椅或體力差的據點當暖身。"},
- {id:"HIFrlnbTRE8",type:"s",title:"一招練肌力與平衡：踮腳尖爬牆｜徐棟英 體適能教練",channel:"早安健康",region:"台灣",posture:"站姿",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"短片（5 分鐘內）",
-  note:"Shorts 短片，一分鐘學一招。雙手持瓶做踮腳尖，就是站姿「側平舉＋踮腳」的簡化版。"},
- {id:"Q-7wBAa8JXI",type:"v",title:"7 分鐘有氧長者運動：椅上操",channel:"仁愛堂鄰舍中心（香港）",region:"香港",posture:"坐姿",goal:["有氧律動"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
-  note:"真實據點長者參與拍攝，7 分鐘長度剛好。手持小瓶跟做即可。"},
- {id:"fw4XG2g_TQs",type:"v",title:"6 分鐘下肢肌力訓練（物理治療師教授）",channel:"仁愛堂鄰舍中心（香港）",region:"香港",posture:"坐站混合",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
-  note:"物理治療師用一張椅子帶下肢肌力與平衡，提醒累了就坐下。適合做為「坐站混合」層次的參考。"},
- {id:"FUEycvXH3GA",type:"v",title:"活力長者健康操（衞生署長者健康服務）",channel:"香港衞生署",region:"香港",posture:"站姿",goal:["有氧律動","肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
-  note:"九式健康操，基礎版不需器材；心肺與下肢肌力並重，整套可當站姿課的骨架，上肢段落再加瓶子。"},
+ /* 香港 */
+ {id:"22OrKhqcKf0",type:"v",title:"長者輕鬆水樽運動（完整版）",channel:"升級教練 Lawrence Lai",region:"香港",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+  note:"整套用水樽，下身有原地快步行、蹲、髖外展，上身有肩上舉、肩外展、夾胸、夾背。是本資料庫最接近「水瓶＋上下肢結合」的範本，適合當整堂課的主幹。"},
+ /* 日本 */
  {id:"fZrqAcgXbi0",type:"v",title:"シニア向け ペットボトルで手軽に筋トレ【座って出来るダンベル体操】",channel:"スギリハ",region:"日本",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"日本日照常用型：整支坐著、拿寶特瓶、附解說，可以直接播放讓長輩跟做。語言不通也能跟，老師在旁喊口令即可。"},
  {id:"qmr4qFsWPC8",type:"v",title:"ペットボトルでかんたん体操",channel:"福岡市（城南区地域保健福祉課）",region:"日本",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"公部門製作，示範如何用瓶子調整強度。動作簡單、可延伸到全年齡，適合據點志工學習帶領。"},
  {id:"Q86Us8l_ZZA",type:"v",title:"ペットボトルで筋力アップ体操",channel:"運動指導士 太田",region:"日本",posture:"坐站混合",goal:["肌力"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"主題就是「用可以自由調整重量的寶特瓶」做肌力。看它怎麼安排次數與組數，很適合對照本頁的研究說明。"},
- {id:"CGZfAbwzuH8",type:"v",title:"［介護施設向け］座って出来る簡単な下肢トレーニング",channel:"日本理學療法士頻道",region:"日本",posture:"坐姿",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
-  note:"為機構團體體操設計，理學療法士考案。坐姿下肢動作加上大腿夾瓶、腳踝勾瓶，就能補足水瓶課的下肢量。"},
- {id:"L4jl7AjmQ40",type:"v",title:"座りながら簡単エクササイズ！高齢者向け ウォーキング体操",channel:"日本高齢者体操頻道",region:"日本",posture:"坐姿",goal:["有氧律動","上下肢結合"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
-  note:"坐姿走路操，上下肢同時動、有休息段落。手持瓶子就是坐姿有氧＋上肢負荷的現成版本。"},
- {id:"6rDfFkU1aTA",type:"v",title:"高齢者 座ったまま うた体操 リズム体操（童謠唱歌版）",channel:"日本デイサービス体操頻道",region:"日本",posture:"坐姿",goal:["有氧律動"],equip:"徒手或椅子，可加水瓶",len:"長片（15 分鐘以上）",
-  note:"歌曲帶動的坐姿律動，有字幕與語音引導。概念可移植到台灣老歌：同樣的手部律動，請學員拿瓶子做。"},
+ {id:"sA3Uf9M2bPg",type:"v",title:"【高齢者運動#7】ペットボトルを使った肩と腕の体操",channel:"豊和グループ（三重縣醫療介護集團）",region:"日本",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"短片（5 分鐘內）",
+  note:"機構自製的短版寶特瓶肩臂操，建議每天中午做一次。動作少而清楚，適合當單一動作的教學示範。"},
+ {id:"wcqrDy88WZw",type:"v",title:"【公式】初めてでも簡単！ダンベル体操（椅子に座ったままでも）",channel:"岡山県健康づくり財団",region:"日本",posture:"坐姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"公益財團製作，為「家裡閒置啞鈴」設計的坐姿啞鈴操，換成水瓶完全適用。流程完整，可直接播放跟做。"},
+ {id:"a9a1_q-2nyw",type:"v",title:"高齢者向けのダンベルトレーニングの紹介",channel:"髙田真吾（医学博士）健康医科学研究室",region:"日本",posture:"坐站混合",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"醫學博士講解高齡者啞鈴訓練，偏教學型。適合老師自己學原理，再轉成水瓶版帶班。"},
+ {id:"PytOWnbpIDc",type:"v",title:"誰でも簡単！ダンベルエクササイズ for beginner",channel:"日本運動教學頻道",region:"日本",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"說明欄直接寫「啞鈴或兩瓶裝水的寶特瓶」。初學者全身動作，站姿為主，可給平衡良好的長輩。"},
+ {id:"LARsdRVCvHU",type:"v",title:"【自宅筋トレ】ダンベルで上半身 6 分間（ペットボトルでもOK）",channel:"なかやまきんに君",region:"日本",posture:"站姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"一般成人向，但留言區有 50 歲照服員用 3 kg 練半年的回饋。口令節奏明快，老師可借用它的喊法；給長輩時把重量換成水瓶、速度放慢。"},
  {id:"x5OwdTWkaeQ",type:"v",title:"【ペットボトルで筋トレ】寝たままできる腕の伸展運動（呼吸器疾患向け）",channel:"日本大學保健醫療學部",region:"日本",posture:"臥姿",goal:["肌力"],equip:"影片使用水瓶",len:"短片（5 分鐘內）",
   note:"理學療法士示範臥姿寶特瓶上肢訓練，給 COPD 等呼吸疾病穩定期者。適合居家服務或臥床個案的家屬參考。"},
- {id:"ntDLjoJMHk8",type:"v",title:"20 Min Chair Exercises for Seniors（light dumbbells or water bottles）",channel:"HASfit",region:"歐美",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+ /* 韓國 */
+ {id:"Li467M7K4k4",type:"v",title:"#2 덤벨을 이용한 상체근력운동（없으면 물병으로）",channel:"韓國健康運動頻道",region:"韓國",posture:"站姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"說明欄寫「選 10 下會累的重量；沒有啞鈴就用水瓶」。上肢六個基本動作（彎舉、單臂划船等），可當動作庫。"},
+ {id:"EGVbE19lBAU",type:"s",title:"아령 하나로 집에서 전신운동！초보자 홈트 루틴",channel:"韓國居家運動頻道",region:"韓國",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"短片（5 分鐘內）",
+  note:"Shorts，一顆啞鈴做全身：啞鈴深蹲、肩推、彎舉、硬舉。換成一瓶 1.5 L 水就是「單瓶全身課」的範本。"},
+ /* 美國、澳洲 */
+ {id:"ntDLjoJMHk8",type:"v",title:"20 Min Chair Exercises for Seniors（light dumbbells or water bottles）",channel:"HASfit（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
   note:"官方說明建議用輕啞鈴或兩瓶水。動作本身就是上下肢結合的教科書：側平舉＋提踵、錘式彎舉＋踏步、交替膝伸直。"},
- {id:"p4M-jdW9noQ",type:"v",title:"15 Minute Water Bottle Workout",channel:"YouTube 健身頻道",region:"歐美",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+ {id:"VAUy6OhjZfE",type:"v",title:"Seated Resistance Exercises For Seniors Using Dumbbells",channel:"Senior Fitness With Meredith（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"官網註明「沒有啞鈴可用水瓶或罐頭」。全程坐姿、上下肢交替，口令慢而清楚，是美國長者團課最常見的帶法。"},
+ {id:"FHLUg-10bqE",type:"v",title:"Full Body Seated Strength Training For Seniors w/ Dumbbells（Intermediate, 30 min）",channel:"Senior Fitness With Meredith（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+  note:"中階版，組數與次數比入門多，正好示範「同樣坐姿、靠組數拉高強度」。適合據點裡體能較好的那一組。"},
+ {id:"wIyzNOirdb8",type:"v",title:"Seated Weights Workout For Seniors (10 Minutes)",channel:"More Life Health（澳洲物理治療師 Mike）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"物理治療師設計，10 分鐘內有提踵、彎舉、肩舉、划船、抬腿、三頭伸展，有章節時間點。想學「10 分鐘怎麼排全身」就看這支。"},
+ {id:"wcpk7TFnZ08",type:"v",title:"Senior & Beginner Workout – 20 minute Seated Dumbbell Easy Arms",channel:"SeniorShape Fitness（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+  note:"坐姿手臂專項，含暖身與收操伸展。適合上肢無力、握力差的長輩做為基礎課。"},
+ {id:"WZzIRmg_4-k",type:"v",title:"Senior & Beginner Dumbbell Workout – All Standing & Knee Friendly",channel:"SeniorShape Fitness（美國）",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+  note:"全站立但沒有深蹲與弓步，對膝蓋友善。示範了不蹲也能練下肢的替代動作，適合膝關節退化的長輩。"},
+ {id:"OmLx8tmaQ-4",type:"v",title:"Building Strength with Dumbbells for Seniors & Beginners – 30 min all Standing",channel:"SeniorShape Fitness（美國）",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+  note:"30 分鐘站姿、用計時器安排組間休息。觀察它怎麼用時間而不是次數控制強度，社區課可把每段縮短一半。"},
+ {id:"CK0iGGNgTlg",type:"v",title:"7 Best Full Body Dumbbell Exercises for Seniors（seated or standing）",channel:"YouTube 長者健身頻道",region:"美國澳洲",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"七個全身動作，每個都示範坐姿與站姿版，直接對應本頁「坐姿→站姿」的分層概念。"},
+ {id:"Y4hY909xnBY",type:"v",title:"No Gym? No Problem! Full-Body Dumbbell and Water Bottle Exercises",channel:"YouTube 居家運動頻道",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+  note:"標題就是啞鈴或水瓶二選一的全身課。動作偏一般成人，給長輩時挑其中站姿簡單的 3–4 個。"},
+ {id:"wqvRwr5ogFw",type:"v",title:"20 Min SEATED Upper Body Workout at Home with Dumbbells",channel:"YouTube 居家運動頻道",region:"美國澳洲",posture:"坐姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+  note:"一般成人的坐姿上肢課，動作幅度與速度都比長者版大。老師可用它擴充動作庫，帶班時減量。"},
+ {id:"p4M-jdW9noQ",type:"v",title:"15 Minute Water Bottle Workout",channel:"YouTube 健身頻道",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"一般成人的站姿水瓶全身課，動作不適合直接給長輩，但可觀察「怎麼把下肢動作塞進上肢動作裡」的編排邏輯。"},
- {id:"PLDqf6nfi4EaxI6JGaTVtQrviO-hMKpmNA",type:"p",title:"中高齡及初學者運動系列（播放清單）",channel:"YouTube 播放清單",region:"台灣",posture:"坐站混合",goal:["肌力","有氧律動"],equip:"徒手或椅子，可加水瓶",len:"播放清單",
-  note:"整個系列由老師帶領中高齡與初學者，可逐支挑選後加入本資料庫。"},
- {id:"PLlzkSQoGCqe38G5cakyn0vLo5AefkZLj1",type:"p",title:"大人的樂活健康操（6 支高齡者運動教學影片）",channel:"國泰人壽 × 臺北市立大學活躍老化運動學院",region:"台灣",posture:"坐站混合",goal:["肌力","有氧律動","暖身伸展"],equip:"徒手或椅子，可加水瓶",len:"播放清單",
-  note:"肌力、柔軟度、心肺三類各有影片，由運動學院設計，適合建立課程結構後再加入水瓶負荷。"}
+ /* 歐洲（德國） */
+ {id:"KywLiuAC7Nw",type:"v",title:"RehaSportTV: Hockergymnastik mit Hantel oder Wasserflasche",channel:"RehaSportTV（德國復健運動）",region:"歐洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+  note:"德國「凳子體操」（Hockergymnastik）傳統：坐在無靠背凳上、用啞鈴或水瓶，上下肢穿插。兩位老師一前一後示範，可學團班的站位方式。"},
+ {id:"J_8Ac22vTGM",type:"v",title:"Hockergymnastik mit Kurzhanteln / Wasserflaschen – Physiowelt",channel:"Physiowelt Borgholzhausen（德國物理治療所）",region:"歐洲",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+  note:"說明欄寫得很具體：啞鈴 0.5–2 kg，或水瓶 0.5–1.5 L，一張凳子。物理治療所製作，動作保守安全。"},
+ {id:"Elm_f4f8UN4",type:"v",title:"Sport mit Doris – Gymnastik mit Wasserflaschen",channel:"德國運動治療師 Doris",region:"歐洲",posture:"坐站混合",goal:["肌力","有氧律動"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+  note:"運動治療師用小水瓶當附加重量的居家課程，節奏偏律動。想把水瓶放進有氧段落可以參考這支。"},
+ {id:"NFUjVZcA3ek",type:"v",title:"Sitzgymnastik mit Hanteln",channel:"德國長者體操頻道",region:"歐洲",posture:"坐姿",goal:["肌力","暖身伸展"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"以「維持活動度與行動力」為目標的坐姿啞鈴操，動作幅度大、速度慢，適合機構或失能程度較高的長輩。"},
+ {id:"n1G6HgSDZ4w",type:"v",title:"Hanteltraining für Senioren",channel:"德國健康運動頻道",region:"歐洲",posture:"坐站混合",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"強調脊椎與背部、預防骨質疏鬆的啞鈴訓練。划船、夾背類動作多，適合駝背、肩頸緊的長輩。"},
+ {id:"ltlDbixqFSM",type:"v",title:"Seniorengymnastik mit Hanteln",channel:"jms-figurinform（德國）",region:"歐洲",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"把協調、肌力與平衡放進同一堂啞鈴課，示範「拿著重量同時練平衡」的編排，和本頁上肢配下肢的概念一致。"},
+ {id:"8ZxKuEr-w34",type:"s",title:"Armtraining mit Hanteln oder Wasserflaschen im Sitzen #seniorengymnastik",channel:"德國長者體操頻道",region:"歐洲",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"短片（5 分鐘內）",
+  note:"Shorts 短片：坐姿手臂後側（拜拜肉）訓練，啞鈴或水瓶皆可。一分鐘學一招，適合當課間補充。"}
 ];
 
 /* ---------- 狀態與儲存 ---------- */
@@ -570,7 +661,7 @@ const state={q:"",posture:null,goal:null,equip:null,region:null,len:null,favOnly
 const POSTURES=["坐姿","站姿","坐站混合","臥姿"];
 const GOALS=["肌力","有氧律動","上下肢結合","握力與手部","暖身伸展"];
 const EQUIPS=["影片使用水瓶","影片使用啞鈴，可換水瓶","徒手或椅子，可加水瓶"];
-const REGIONS=["台灣","香港","日本","歐美","其他"];
+const REGIONS=["台灣","香港","日本","韓國","美國澳洲","歐洲","其他"];
 const LENS=["短片（5 分鐘內）","中片（5–15 分鐘）","長片（15 分鐘以上）","播放清單"];
 
 function mkFilters(el,key,list){
@@ -699,6 +790,23 @@ document.getElementById("importFile").addEventListener("change",e=>{
     save(LS.mine,mine);save(LS.fav,favs);save(LS.notes,notes);render();alert("匯入完成")}catch(err){alert("檔案格式不正確")}};
   r.readAsText(file);e.target.value="";
 });
+
+/* ---------- 瓶子夠重嗎 ---------- */
+(function(){
+  const sz=document.getElementById("cSize"),rp=document.getElementById("cReps"),rv=document.getElementById("cRepsV"),res=document.getElementById("cRes");
+  function kg(){return parseFloat(sz.querySelector(".on").dataset.v)}
+  function out(){
+    const r=+rp.value,w=kg();rv.textContent=r;
+    let cls="",html="";
+    if(r<8){cls="heavy";html=`<b>偏重，先減量</b>這瓶約 ${w} 公斤，不到 8 下就很吃力，動作容易變形。改用小一點的瓶子、倒掉一半，或改成前平舉這類幅度小的動作。`}
+    else if(r<=20){cls="ok";html=`<b>剛好，就是這個重量</b>約 ${w} 公斤做 ${r} 下會累，正好落在肌力訓練的範圍。每個動作做 2–3 組，每組都做到最後 2 下很想停。`}
+    else if(r<=30){cls="";html=`<b>偏輕，但還能用</b>約 ${w} 公斤要做 ${r} 下才累。先不換瓶子：放下的速度放慢到 3 秒、休息縮短到 30 秒、多做一組，就能把吃力感拉回來。`}
+    else{cls="";html=`<b>太輕，請換大瓶</b>做 ${r} 下才累，比較像在活動關節。換成 ${w<1?"1 L":w<1.5?"1.5 L":"裝沙的瓶子"}，或兩手合握一瓶做單瓶動作。研究說明：輕重量要有效，前提是每組做到接近力竭。`}
+    res.className="cres "+cls;res.innerHTML=html;
+  }
+  sz.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;[...sz.children].forEach(x=>x.classList.remove("on"));b.classList.add("on");out()});
+  rp.addEventListener("input",out);out();
+})();
 
 /* ---------- 主題 ---------- */
 const root=document.documentElement;
