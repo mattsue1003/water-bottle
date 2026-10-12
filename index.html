@@ -430,7 +430,7 @@ footer b{color:var(--ink-2)}
       <ul>
         <li>水瓶可以練肌力、可以增肌，前提是<strong>每組做到「很吃力、再 2 下就做不動」</strong>（自覺吃力度約 7–8 分，滿分 10）。</li>
         <li>做不到吃力，就用三招：<strong>換大瓶、多做一組、放慢放下的速度</strong>。</li>
-        <li>最大力量仍以重的器材較有效；若長輩目標是「自己提 5 公斤米回家」，課程中段可改用 1.5 L 瓶、裝沙瓶或壺鈴型器材。</li>
+        <li>最大力量仍以重的器材較有效。若長輩有具體的生活目標，例如「自己提 5 公斤的購物袋回家」，就從那個任務倒推：兩瓶 600 ml（1.2 kg）→ 兩瓶 1.5 L（3 kg）→ 兩瓶 2 L 裝水（4 kg）→ 最後直接提裝了 5 公斤米的袋子走路。目標達成後想再往上加，再改用裝沙瓶（乾沙約每公升 1.5 kg，2 L 瓶約 3 kg）。依據是訓練專一性（肌力進步隨負荷遞增，見上方兩篇統合分析）與漸進式超負荷（NSCA 高齡者阻力訓練立場聲明 Fragala 等 2019 建議肌力目標可推進到 70–85% 1RM；ACSM 建議能輕鬆完成目標下數時負荷再加 2–10%）。1.5 L 只是市售瓶裝水的最大規格，不是某個換算值。</li>
         <li>以上研究多數是 12 週以內、每週 2–3 次；社區課想看到變化，<strong>頻率與持續</strong>比器材重要。</li>
       </ul>
       <div class="rpe">
@@ -484,7 +484,7 @@ footer b{color:var(--ink-2)}
 <section id="db">
   <div class="wrap">
     <h2>影片資料庫</h2>
-    <p class="lead">以下都是實際存在的 YouTube 影片，每一支都以水瓶或輕啞鈴為器材（啞鈴影片皆可直接換成水瓶），涵蓋台灣、香港、日本、韓國、美國澳洲與德國，讓老師可以比較不同地區的動作設計與帶領方式。點縮圖可在頁面內播放；每支影片附「帶班筆記」說明怎麼用在社區課，也可以寫下自己的備註、收藏，或加入自己找到的影片。</p>
+    <p class="lead">以下都是實際存在的 YouTube 影片，每一支都以水瓶或啞鈴為器材。標示「長者團課」的影片可直接用來帶據點長輩；標示「動作參考」的是一般成人的啞鈴訓練內容，給老師擴充動作庫、觀察各地編排方式，帶長輩時需減量與調整。點縮圖可在頁面內播放；每支影片附「帶班筆記」說明怎麼用在社區課，也可以寫下自己的備註、收藏，或加入自己找到的影片。</p>
 
     <div class="tools">
       <input class="search" id="q" type="search" placeholder="搜尋：寶特瓶、坐姿、下肢、握力、德國、日本…" aria-label="搜尋影片">
@@ -493,6 +493,7 @@ footer b{color:var(--ink-2)}
       <div class="active" id="active"></div>
     </div>
     <div class="filters" id="filters">
+      <div class="frow"><span class="lab">適用</span><div id="fAud"></div></div>
       <div class="frow"><span class="lab">姿勢</span><div id="fPosture"></div></div>
       <div class="frow"><span class="lab">目標</span><div id="fGoal"></div></div>
       <div class="frow"><span class="lab">器材</span><div id="fEquip"></div></div>
@@ -513,6 +514,7 @@ footer b{color:var(--ink-2)}
       <form id="addForm">
         <div class="full"><label>YouTube 網址</label><input name="url" required placeholder="https://www.youtube.com/watch?v=…"></div>
         <div class="full"><label>影片標題</label><input name="title" required placeholder="例：據點水瓶操 15 分鐘"></div>
+        <div><label>適用</label><select name="aud"><option>長者團課</option><option>動作參考</option></select></div>
         <div><label>姿勢</label><select name="posture"><option>坐姿</option><option>站姿</option><option>坐站混合</option><option>臥姿</option></select></div>
         <div><label>主要目標</label><select name="goal"><option>肌力</option><option>有氧律動</option><option>上下肢結合</option><option>握力與手部</option><option>暖身伸展</option></select></div>
         <div><label>器材</label><select name="equip"><option>影片使用水瓶</option><option>影片使用啞鈴，可換水瓶</option><option>徒手或椅子，可加水瓶</option></select></div>
@@ -576,79 +578,171 @@ footer b{color:var(--ink-2)}
 /* ---------- 內建影片資料（皆為實際存在之 YouTube 影片） ---------- */
 const BUILT_IN = [
  /* 台灣 */
- {id:"T6lxOVduTI4",type:"v",title:"10 分鐘肌力訓練｜新手、老人運動｜全站立全身｜預防肌少症",channel:"1M6FIT",region:"台灣",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"T6lxOVduTI4",aud:"長者團課",type:"v",title:"10 分鐘肌力訓練｜新手、老人運動｜全站立全身｜預防肌少症",channel:"1M6FIT",region:"台灣",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"影片說明直接寫「可搭配寶特瓶或啞鈴」。夾胸肩推、深蹲等動作節奏偏快，社區課建議把速度放慢一半、站在椅子前做。"},
- {id:"oleckDQ49KE",type:"v",title:"20 分鐘全身雕塑｜壺鈴或寶特瓶｜全站立｜含暖身與伸展",channel:"1M6FIT",region:"台灣",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"長片（15 分鐘以上）",
+ {id:"oleckDQ49KE",aud:"長者團課",type:"v",title:"20 分鐘全身雕塑｜壺鈴或寶特瓶｜全站立｜含暖身與伸展",channel:"1M6FIT",region:"台灣",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"長片（15 分鐘以上）",
   note:"單一大瓶（1.5–2 L）的用法示範，適合體能較好的長輩或課程後段的進階組；蹲與推結合的動作多，老師可挑 3–4 個動作拆出來用。"},
- {id:"IEjkfmvqIV8",type:"v",title:"靠寶特瓶 2 招免花錢鍛鍊握力肌｜劉燦宏醫師 X 李杰教練",channel:"早安健康",region:"台灣",posture:"坐姿",goal:["握力與手部"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+ {id:"IEjkfmvqIV8",aud:"長者團課",type:"v",title:"靠寶特瓶 2 招免花錢鍛鍊握力肌｜劉燦宏醫師 X 李杰教練",channel:"早安健康",region:"台灣",posture:"坐姿",goal:["握力與手部"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"握力是 ICOPE 與肌少症篩檢的指標，這支用寶特瓶做手腕與前臂訓練，適合放在課程開頭 3 分鐘當「手部暖機」。"},
- {id:"ldTnHnS6EDQ",type:"v",title:"年長者也能開始的啞鈴訓練｜從挑選重量到入門動作",channel:"YouTube 教練頻道",region:"台灣",posture:"坐站混合",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"ldTnHnS6EDQ",aud:"長者團課",type:"v",title:"年長者也能開始的啞鈴訓練｜從挑選重量到入門動作",channel:"YouTube 教練頻道",region:"台灣",posture:"坐站混合",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"重點在「怎麼挑重量」，老師看完可以把挑重量的原則翻譯成挑瓶子的原則（做 12–15 下會累就對了）。"},
  /* 香港 */
- {id:"22OrKhqcKf0",type:"v",title:"長者輕鬆水樽運動（完整版）",channel:"升級教練 Lawrence Lai",region:"香港",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+ {id:"22OrKhqcKf0",aud:"長者團課",type:"v",title:"長者輕鬆水樽運動（完整版）",channel:"升級教練 Lawrence Lai",region:"香港",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"整套用水樽，下身有原地快步行、蹲、髖外展，上身有肩上舉、肩外展、夾胸、夾背。是本資料庫最接近「水瓶＋上下肢結合」的範本，適合當整堂課的主幹。"},
  /* 日本 */
- {id:"fZrqAcgXbi0",type:"v",title:"シニア向け ペットボトルで手軽に筋トレ【座って出来るダンベル体操】",channel:"スギリハ",region:"日本",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+ {id:"fZrqAcgXbi0",aud:"長者團課",type:"v",title:"シニア向け ペットボトルで手軽に筋トレ【座って出来るダンベル体操】",channel:"スギリハ",region:"日本",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"日本日照常用型：整支坐著、拿寶特瓶、附解說，可以直接播放讓長輩跟做。語言不通也能跟，老師在旁喊口令即可。"},
- {id:"qmr4qFsWPC8",type:"v",title:"ペットボトルでかんたん体操",channel:"福岡市（城南区地域保健福祉課）",region:"日本",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+ {id:"qmr4qFsWPC8",aud:"長者團課",type:"v",title:"ペットボトルでかんたん体操",channel:"福岡市（城南区地域保健福祉課）",region:"日本",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"公部門製作，示範如何用瓶子調整強度。動作簡單、可延伸到全年齡，適合據點志工學習帶領。"},
- {id:"Q86Us8l_ZZA",type:"v",title:"ペットボトルで筋力アップ体操",channel:"運動指導士 太田",region:"日本",posture:"坐站混合",goal:["肌力"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+ {id:"Q86Us8l_ZZA",aud:"長者團課",type:"v",title:"ペットボトルで筋力アップ体操",channel:"運動指導士 太田",region:"日本",posture:"坐站混合",goal:["肌力"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"主題就是「用可以自由調整重量的寶特瓶」做肌力。看它怎麼安排次數與組數，很適合對照本頁的研究說明。"},
- {id:"sA3Uf9M2bPg",type:"v",title:"【高齢者運動#7】ペットボトルを使った肩と腕の体操",channel:"豊和グループ（三重縣醫療介護集團）",region:"日本",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"短片（5 分鐘內）",
+ {id:"sA3Uf9M2bPg",aud:"長者團課",type:"v",title:"【高齢者運動#7】ペットボトルを使った肩と腕の体操",channel:"豊和グループ（三重縣醫療介護集團）",region:"日本",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"短片（5 分鐘內）",
   note:"機構自製的短版寶特瓶肩臂操，建議每天中午做一次。動作少而清楚，適合當單一動作的教學示範。"},
- {id:"wcqrDy88WZw",type:"v",title:"【公式】初めてでも簡単！ダンベル体操（椅子に座ったままでも）",channel:"岡山県健康づくり財団",region:"日本",posture:"坐姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"wcqrDy88WZw",aud:"長者團課",type:"v",title:"【公式】初めてでも簡単！ダンベル体操（椅子に座ったままでも）",channel:"岡山県健康づくり財団",region:"日本",posture:"坐姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"公益財團製作，為「家裡閒置啞鈴」設計的坐姿啞鈴操，換成水瓶完全適用。流程完整，可直接播放跟做。"},
- {id:"a9a1_q-2nyw",type:"v",title:"高齢者向けのダンベルトレーニングの紹介",channel:"髙田真吾（医学博士）健康医科学研究室",region:"日本",posture:"坐站混合",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"a9a1_q-2nyw",aud:"長者團課",type:"v",title:"高齢者向けのダンベルトレーニングの紹介",channel:"髙田真吾（医学博士）健康医科学研究室",region:"日本",posture:"坐站混合",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"醫學博士講解高齡者啞鈴訓練，偏教學型。適合老師自己學原理，再轉成水瓶版帶班。"},
- {id:"PytOWnbpIDc",type:"v",title:"誰でも簡単！ダンベルエクササイズ for beginner",channel:"日本運動教學頻道",region:"日本",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"PytOWnbpIDc",aud:"長者團課",type:"v",title:"誰でも簡単！ダンベルエクササイズ for beginner",channel:"日本運動教學頻道",region:"日本",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"說明欄直接寫「啞鈴或兩瓶裝水的寶特瓶」。初學者全身動作，站姿為主，可給平衡良好的長輩。"},
- {id:"LARsdRVCvHU",type:"v",title:"【自宅筋トレ】ダンベルで上半身 6 分間（ペットボトルでもOK）",channel:"なかやまきんに君",region:"日本",posture:"站姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"LARsdRVCvHU",aud:"動作參考",type:"v",title:"【自宅筋トレ】ダンベルで上半身 6 分間（ペットボトルでもOK）",channel:"なかやまきんに君",region:"日本",posture:"站姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"一般成人向，但留言區有 50 歲照服員用 3 kg 練半年的回饋。口令節奏明快，老師可借用它的喊法；給長輩時把重量換成水瓶、速度放慢。"},
- {id:"x5OwdTWkaeQ",type:"v",title:"【ペットボトルで筋トレ】寝たままできる腕の伸展運動（呼吸器疾患向け）",channel:"日本大學保健醫療學部",region:"日本",posture:"臥姿",goal:["肌力"],equip:"影片使用水瓶",len:"短片（5 分鐘內）",
+ {id:"x5OwdTWkaeQ",aud:"長者團課",type:"v",title:"【ペットボトルで筋トレ】寝たままできる腕の伸展運動（呼吸器疾患向け）",channel:"日本大學保健醫療學部",region:"日本",posture:"臥姿",goal:["肌力"],equip:"影片使用水瓶",len:"短片（5 分鐘內）",
   note:"理學療法士示範臥姿寶特瓶上肢訓練，給 COPD 等呼吸疾病穩定期者。適合居家服務或臥床個案的家屬參考。"},
  /* 韓國 */
- {id:"Li467M7K4k4",type:"v",title:"#2 덤벨을 이용한 상체근력운동（없으면 물병으로）",channel:"韓國健康運動頻道",region:"韓國",posture:"站姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"Li467M7K4k4",aud:"動作參考",type:"v",title:"#2 덤벨을 이용한 상체근력운동（없으면 물병으로）",channel:"韓國健康運動頻道",region:"韓國",posture:"站姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"說明欄寫「選 10 下會累的重量；沒有啞鈴就用水瓶」。上肢六個基本動作（彎舉、單臂划船等），可當動作庫。"},
- {id:"EGVbE19lBAU",type:"s",title:"아령 하나로 집에서 전신운동！초보자 홈트 루틴",channel:"韓國居家運動頻道",region:"韓國",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"短片（5 分鐘內）",
+ {id:"EGVbE19lBAU",aud:"動作參考",type:"s",title:"아령 하나로 집에서 전신운동！초보자 홈트 루틴",channel:"韓國居家運動頻道",region:"韓國",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"短片（5 分鐘內）",
   note:"Shorts，一顆啞鈴做全身：啞鈴深蹲、肩推、彎舉、硬舉。換成一瓶 1.5 L 水就是「單瓶全身課」的範本。"},
  /* 美國、澳洲 */
- {id:"ntDLjoJMHk8",type:"v",title:"20 Min Chair Exercises for Seniors（light dumbbells or water bottles）",channel:"HASfit（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+ {id:"ntDLjoJMHk8",aud:"長者團課",type:"v",title:"20 Min Chair Exercises for Seniors（light dumbbells or water bottles）",channel:"HASfit（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
   note:"官方說明建議用輕啞鈴或兩瓶水。動作本身就是上下肢結合的教科書：側平舉＋提踵、錘式彎舉＋踏步、交替膝伸直。"},
- {id:"VAUy6OhjZfE",type:"v",title:"Seated Resistance Exercises For Seniors Using Dumbbells",channel:"Senior Fitness With Meredith（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"VAUy6OhjZfE",aud:"長者團課",type:"v",title:"Seated Resistance Exercises For Seniors Using Dumbbells",channel:"Senior Fitness With Meredith（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"官網註明「沒有啞鈴可用水瓶或罐頭」。全程坐姿、上下肢交替，口令慢而清楚，是美國長者團課最常見的帶法。"},
- {id:"FHLUg-10bqE",type:"v",title:"Full Body Seated Strength Training For Seniors w/ Dumbbells（Intermediate, 30 min）",channel:"Senior Fitness With Meredith（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+ {id:"FHLUg-10bqE",aud:"長者團課",type:"v",title:"Full Body Seated Strength Training For Seniors w/ Dumbbells（Intermediate, 30 min）",channel:"Senior Fitness With Meredith（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
   note:"中階版，組數與次數比入門多，正好示範「同樣坐姿、靠組數拉高強度」。適合據點裡體能較好的那一組。"},
- {id:"wIyzNOirdb8",type:"v",title:"Seated Weights Workout For Seniors (10 Minutes)",channel:"More Life Health（澳洲物理治療師 Mike）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"wIyzNOirdb8",aud:"長者團課",type:"v",title:"Seated Weights Workout For Seniors (10 Minutes)",channel:"More Life Health（澳洲物理治療師 Mike）",region:"美國澳洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"物理治療師設計，10 分鐘內有提踵、彎舉、肩舉、划船、抬腿、三頭伸展，有章節時間點。想學「10 分鐘怎麼排全身」就看這支。"},
- {id:"wcpk7TFnZ08",type:"v",title:"Senior & Beginner Workout – 20 minute Seated Dumbbell Easy Arms",channel:"SeniorShape Fitness（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+ {id:"wcpk7TFnZ08",aud:"長者團課",type:"v",title:"Senior & Beginner Workout – 20 minute Seated Dumbbell Easy Arms",channel:"SeniorShape Fitness（美國）",region:"美國澳洲",posture:"坐姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
   note:"坐姿手臂專項，含暖身與收操伸展。適合上肢無力、握力差的長輩做為基礎課。"},
- {id:"WZzIRmg_4-k",type:"v",title:"Senior & Beginner Dumbbell Workout – All Standing & Knee Friendly",channel:"SeniorShape Fitness（美國）",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+ {id:"WZzIRmg_4-k",aud:"長者團課",type:"v",title:"Senior & Beginner Dumbbell Workout – All Standing & Knee Friendly",channel:"SeniorShape Fitness（美國）",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
   note:"全站立但沒有深蹲與弓步，對膝蓋友善。示範了不蹲也能練下肢的替代動作，適合膝關節退化的長輩。"},
- {id:"OmLx8tmaQ-4",type:"v",title:"Building Strength with Dumbbells for Seniors & Beginners – 30 min all Standing",channel:"SeniorShape Fitness（美國）",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+ {id:"OmLx8tmaQ-4",aud:"長者團課",type:"v",title:"Building Strength with Dumbbells for Seniors & Beginners – 30 min all Standing",channel:"SeniorShape Fitness（美國）",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
   note:"30 分鐘站姿、用計時器安排組間休息。觀察它怎麼用時間而不是次數控制強度，社區課可把每段縮短一半。"},
- {id:"CK0iGGNgTlg",type:"v",title:"7 Best Full Body Dumbbell Exercises for Seniors（seated or standing）",channel:"YouTube 長者健身頻道",region:"美國澳洲",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"CK0iGGNgTlg",aud:"長者團課",type:"v",title:"7 Best Full Body Dumbbell Exercises for Seniors（seated or standing）",channel:"YouTube 長者健身頻道",region:"美國澳洲",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"七個全身動作，每個都示範坐姿與站姿版，直接對應本頁「坐姿→站姿」的分層概念。"},
- {id:"Y4hY909xnBY",type:"v",title:"No Gym? No Problem! Full-Body Dumbbell and Water Bottle Exercises",channel:"YouTube 居家運動頻道",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+ {id:"Y4hY909xnBY",aud:"動作參考",type:"v",title:"No Gym? No Problem! Full-Body Dumbbell and Water Bottle Exercises",channel:"YouTube 居家運動頻道",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"標題就是啞鈴或水瓶二選一的全身課。動作偏一般成人，給長輩時挑其中站姿簡單的 3–4 個。"},
- {id:"wqvRwr5ogFw",type:"v",title:"20 Min SEATED Upper Body Workout at Home with Dumbbells",channel:"YouTube 居家運動頻道",region:"美國澳洲",posture:"坐姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+ {id:"wqvRwr5ogFw",aud:"動作參考",type:"v",title:"20 Min SEATED Upper Body Workout at Home with Dumbbells",channel:"YouTube 居家運動頻道",region:"美國澳洲",posture:"坐姿",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
   note:"一般成人的坐姿上肢課，動作幅度與速度都比長者版大。老師可用它擴充動作庫，帶班時減量。"},
- {id:"p4M-jdW9noQ",type:"v",title:"15 Minute Water Bottle Workout",channel:"YouTube 健身頻道",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+ {id:"p4M-jdW9noQ",aud:"動作參考",type:"v",title:"15 Minute Water Bottle Workout",channel:"YouTube 健身頻道",region:"美國澳洲",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"一般成人的站姿水瓶全身課，動作不適合直接給長輩，但可觀察「怎麼把下肢動作塞進上肢動作裡」的編排邏輯。"},
  /* 歐洲（德國） */
- {id:"KywLiuAC7Nw",type:"v",title:"RehaSportTV: Hockergymnastik mit Hantel oder Wasserflasche",channel:"RehaSportTV（德國復健運動）",region:"歐洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+ {id:"KywLiuAC7Nw",aud:"長者團課",type:"v",title:"RehaSportTV: Hockergymnastik mit Hantel oder Wasserflasche",channel:"RehaSportTV（德國復健運動）",region:"歐洲",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"德國「凳子體操」（Hockergymnastik）傳統：坐在無靠背凳上、用啞鈴或水瓶，上下肢穿插。兩位老師一前一後示範，可學團班的站位方式。"},
- {id:"J_8Ac22vTGM",type:"v",title:"Hockergymnastik mit Kurzhanteln / Wasserflaschen – Physiowelt",channel:"Physiowelt Borgholzhausen（德國物理治療所）",region:"歐洲",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+ {id:"J_8Ac22vTGM",aud:"長者團課",type:"v",title:"Hockergymnastik mit Kurzhanteln / Wasserflaschen – Physiowelt",channel:"Physiowelt Borgholzhausen（德國物理治療所）",region:"歐洲",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"說明欄寫得很具體：啞鈴 0.5–2 kg，或水瓶 0.5–1.5 L，一張凳子。物理治療所製作，動作保守安全。"},
- {id:"Elm_f4f8UN4",type:"v",title:"Sport mit Doris – Gymnastik mit Wasserflaschen",channel:"德國運動治療師 Doris",region:"歐洲",posture:"坐站混合",goal:["肌力","有氧律動"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+ {id:"Elm_f4f8UN4",aud:"長者團課",type:"v",title:"Sport mit Doris – Gymnastik mit Wasserflaschen",channel:"德國運動治療師 Doris",region:"歐洲",posture:"坐站混合",goal:["肌力","有氧律動"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
   note:"運動治療師用小水瓶當附加重量的居家課程，節奏偏律動。想把水瓶放進有氧段落可以參考這支。"},
- {id:"NFUjVZcA3ek",type:"v",title:"Sitzgymnastik mit Hanteln",channel:"德國長者體操頻道",region:"歐洲",posture:"坐姿",goal:["肌力","暖身伸展"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"NFUjVZcA3ek",aud:"長者團課",type:"v",title:"Sitzgymnastik mit Hanteln",channel:"德國長者體操頻道",region:"歐洲",posture:"坐姿",goal:["肌力","暖身伸展"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"以「維持活動度與行動力」為目標的坐姿啞鈴操，動作幅度大、速度慢，適合機構或失能程度較高的長輩。"},
- {id:"n1G6HgSDZ4w",type:"v",title:"Hanteltraining für Senioren",channel:"德國健康運動頻道",region:"歐洲",posture:"坐站混合",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"n1G6HgSDZ4w",aud:"長者團課",type:"v",title:"Hanteltraining für Senioren",channel:"德國健康運動頻道",region:"歐洲",posture:"坐站混合",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"強調脊椎與背部、預防骨質疏鬆的啞鈴訓練。划船、夾背類動作多，適合駝背、肩頸緊的長輩。"},
- {id:"ltlDbixqFSM",type:"v",title:"Seniorengymnastik mit Hanteln",channel:"jms-figurinform（德國）",region:"歐洲",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+ {id:"ltlDbixqFSM",aud:"長者團課",type:"v",title:"Seniorengymnastik mit Hanteln",channel:"jms-figurinform（德國）",region:"歐洲",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
   note:"把協調、肌力與平衡放進同一堂啞鈴課，示範「拿著重量同時練平衡」的編排，和本頁上肢配下肢的概念一致。"},
- {id:"8ZxKuEr-w34",type:"s",title:"Armtraining mit Hanteln oder Wasserflaschen im Sitzen #seniorengymnastik",channel:"德國長者體操頻道",region:"歐洲",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"短片（5 分鐘內）",
+ {id:"8ZxKuEr-w34",aud:"長者團課",type:"s",title:"Armtraining mit Hanteln oder Wasserflaschen im Sitzen #seniorengymnastik",channel:"德國長者體操頻道",region:"歐洲",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"短片（5 分鐘內）",
   note:"Shorts 短片：坐姿手臂後側（拜拜肉）訓練，啞鈴或水瓶皆可。一分鐘學一招，適合當課間補充。"}
+,
+ /* 使用者提供清單 */
+ {"id": "vxHNk8NG2XE", "type": "v", "title": "居家微運動｜水瓶篇｜【簡老師練5功】", "channel": "台灣癌症基金會", "region": "台灣", "posture": "坐站混合", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "樂齡／居家健康 - 台灣癌症基金會官方推廣，以日常寶特瓶作溫和上肢運動"},
+ {"id": "yNpJD-4VExc", "type": "v", "title": "肌力訓練水瓶運動 - 106年臺北市長者身體活動指引影片", "channel": "臺北市政府衛生局", "region": "台灣", "posture": "坐站混合", "goal": ["肌力", "上下肢結合"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "高齡長者／防跌 - 官方體適能指引，含暖身、水瓶推舉與下肢肌耐力動作"},
+ {"id": "KjjAW0BOfdI", "type": "v", "title": "【水瓶肌力訓練】There's Nothing Holding Me Back ｜樂活運動", "channel": "LOHAS 樂活士", "region": "台灣", "posture": "坐站混合", "goal": ["肌力", "有氧律動"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "樂齡／節奏肌力 - 搭配輕快音樂節奏帶動，提升長輩心肺活力與手臂肌耐力"},
+ {"id": "VxVPl1PEHhw", "type": "v", "title": "15分鐘樂齡瓶瓶安安｜中高齡運動｜水瓶運動｜椅子上運動", "channel": "樂齡健康推廣", "region": "台灣", "posture": "坐姿", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "中高齡／坐姿安全 - 坐在椅子上即可操作的水瓶運動，安全防跌且活動關節"},
+ {"id": "U8cY5w1M92I", "type": "v", "title": "【樂齡運動】樂齡肌力訓練⎥水瓶肌力⎥elderly fitness", "channel": "Yu小余老師", "region": "台灣", "posture": "坐站混合", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "銀髮族／上肢肌力 - 教導長輩水瓶握法、肩關節活動度與手臂肌肉刺激"},
+ {"id": "1f5kIKJYz-o", "type": "v", "title": "要健康就運動2018 - 水瓶上肢訓練", "channel": "希望電視台", "region": "台灣", "posture": "坐站混合", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "大眾居家／上肢肌力 - 15分鐘完整跟練教學，著重三角肌、二頭肌與背部舒展"},
+ {"id": "felrm-SS2Y0", "type": "v", "title": "乐龄预防肌少症，水瓶功能健身操，安全的代替哑铃", "channel": "Nate老師", "region": "台灣", "posture": "坐站混合", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "長輩肌少症預防 - 28分鐘功能性健身操，詳細解析水瓶作為阻力器材安全性"},
+ {"id": "lb21U7dMXrQ", "type": "v", "title": "樂齡運動指導-水瓶肌力訓練-東海大學高齡健康與運動科學學程", "channel": "東海大學運動科學學程", "region": "台灣", "posture": "坐站混合", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "學院專業指導 - 大學高齡健康專業師生團隊示範，動作標準且具學術基礎"},
+ {"id": "wxgsgxQgNKw", "type": "v", "title": "【居家健身菜單】水瓶運動ep4 肩推三頭屈伸！有效訓練", "channel": "OWNFitness", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "青年女性／手臂線條 - 專門針對蝴蝶袖、肩部線條設計的水瓶抗阻力居家動作。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "f_4O8CGYNEs", "type": "v", "title": "教你用水瓶練上肢肌力｜ LOHAS 樂活士｜ 樂齡運動", "channel": "LOHAS 樂活士", "region": "台灣", "posture": "坐站混合", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "樂齡新手／上肢肌群 - 動作簡單易學，適合居家自我訓練及社區據點長者活動"},
+ {"id": "ehX4wGID4-Q", "type": "v", "title": "健康肌力操 水啞鈴篇", "channel": "健康生活促進", "region": "台灣", "posture": "坐站混合", "goal": ["肌力", "上下肢結合"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "居家通用／徒手進階 - 介紹以不同水量調節重量進行推舉、划船與深蹲抗阻"},
+ {"id": "aGAshfBrrtQ", "type": "v", "title": "在家就能練！高齡者30分鐘水瓶上肢運動1-2 ft.葉耀中教練", "channel": "i 醫健康網", "region": "台灣", "posture": "坐站混合", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "長片（15 分鐘以上）", "aud": "長者團課", "note": "高齡樂齡／防肌少 - 30分鐘系統化水瓶上肢訓練，跟隨專業體適能教練動作示範"},
+ {"id": "z-SFNLHpML8", "type": "v", "title": "在家就能練！高齡者30分鐘水瓶上肢運動 ft.葉耀中教練", "channel": "i 醫健康網", "region": "台灣", "posture": "坐站混合", "goal": ["肌力", "握力與手部"], "equip": "影片使用水瓶", "len": "長片（15 分鐘以上）", "aud": "長者團課", "note": "長輩體適能／肩頸手臂 - 葉耀中教練親授，強化銀髮族抓握力量與肩膀上推功能"},
+ {"id": "oOyq-kI_JMk", "type": "v", "title": "『Kay的銀養學堂』- (4) 坐姿水瓶健身操 2.0", "channel": "Kay的銀養學堂", "region": "台灣", "posture": "坐姿", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "中高齡坐姿防跌 - 維持個人生活品質與關節靈活度的坐姿水瓶動作解析"},
+ {"id": "yta46mpd7eo", "type": "v", "title": "水瓶上肢肌力x有氧｜LOHAS 樂活士｜樂齡運動", "channel": "LOHAS 樂活士", "region": "台灣", "posture": "坐站混合", "goal": ["肌力", "有氧律動"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "有氧節奏結合肌力 - 音樂律動融合水瓶抗阻，提升心肺耐力與肢體協調"},
+ {"id": "i-d8RMkwmu4", "type": "v", "title": "天天運動十分鐘 11：「寶特瓶肌肉操 4」", "channel": "OIKOS 歐伊寇斯", "region": "台灣", "posture": "坐站混合", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "居家十分鐘微運動 - 每天10分鐘利用喝完的寶特瓶進行背部與手臂核心鍛鍊"},
+ {"id": "XJc51-HVDcg", "type": "v", "title": "10分鐘｜寶特瓶健身運動，樂齡初學適合｜樂齡動動系列", "channel": "中華民國健身運動協會", "region": "台灣", "posture": "坐站混合", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "中片（5–15 分鐘）", "aud": "長者團課", "note": "樂齡初學標準指引 - 健身運動協會官方規劃，安全循序漸進的水瓶阻力操"},
+ {"id": "9oJ6E6ECohs", "type": "v", "title": "IFBB PRO | 在家訓練| 在家練全身！15個啞鈴訓練動作", "channel": "大H IFBB PRO", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "進階全身／肌肥大 - 台灣知名健美職業選手示範15個全身啞鈴動作，在家也能練滿。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "XS_xHbdeRSw", "type": "v", "title": "居家啞鈴訓練｜高強度間歇燃脂，每天只要30分鐘！", "channel": "Peeta 葛格", "region": "台灣", "posture": "站姿", "goal": ["肌力", "有氧律動", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "長片（15 分鐘以上）", "aud": "動作參考", "note": "全身燃脂／HIIT - 結合重量與心肺耐力的間歇課表，適合居家快速燃脂。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "N6_OTIFxmps", "type": "v", "title": "躺椅＋啞鈴的居家肌肥大訓練#好家在我在家", "channel": "Peeta 葛格", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "居家增肌／胸背肩腿 - 教導如何利用一張躺椅搭配啞鈴模擬健身房器材進行肌肥大。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "rmVwPMTt9M4", "type": "v", "title": "打造強肩與三頭！一組調節式啞鈴就搞定的居家訓練", "channel": "專業重訓指南", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "上半身專項／肩臂 - 一組快調啞鈴全方位轟炸三角肌前中後束與手臂三頭肌。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "mZlXfpD0umg", "type": "v", "title": "10個啞鈴動作練全身#NUO232可調式啞鈴", "channel": "瀾教主開箱健身", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "全身復合動作 - 介紹10個高效動作：仰臥推舉、單臂划船、高腳杯深蹲等。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "ilHYdAFTqmE", "type": "v", "title": "十二分鐘⏱️啞鈴練全身", "channel": "健身跟練日常", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "短時高密度跟練 - 12分鐘無器械切換全身循環，適合工作忙碌者居家維持體能。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "K7yJThoOLVI", "type": "v", "title": "居家啞鈴訓練！22個動作打造超完美上肢（胸、背、二頭、三頭、肩）", "channel": "健身教學百科", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "上肢五大部位動作庫 - 22個完整上肢啞鈴動作教學，包含解剖發力與姿勢修正細節。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "dO9fI_HwBWQ", "type": "v", "title": "【店員教學】INTERSPORT 摩曼頓教你在家也能動 居家啞鈴訓練！", "channel": "INTERSPORT 摩曼頓", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "新手入門基礎 - 運動用品店專業教練解說新手啞鈴重量挑選與基礎動作。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "wrUYkKGfnTg", "type": "v", "title": "全網最全！30個家庭啞鈴增肌動作教學（含計劃安排）", "channel": "卓叔增重", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "家庭增肌完整課表 - 30個家庭啞鈴動作系統教學，無需臥推凳即可訓練全身。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "bSb2W76uuZE", "type": "v", "title": "一對啞鈴練全身 ｜ 居家必備增肌訓練 ｜ 適合男女生 新手上路", "channel": "z3niaching", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "男女通用居家增肌 - 新手友善全身增肌循環，動作簡單易學且強度適中。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "p1Adz93bdP0", "type": "v", "title": "3 - 6 分鐘啞鈴全身的基本訓練動作【初級 - 中級版】", "channel": "Eugene Wong", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "全身高效基礎動作 - 3-6分鐘快速全身熱身或晨間微重訓，男女新手皆適合。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "l4OAWAiDd8I", "type": "v", "title": "【初階】10分鐘 啞鈴全身訓練 新手增肌減脂", "channel": "游書庭 - 瘦身有氧", "region": "台灣", "posture": "站姿", "goal": ["肌力", "有氧律動", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "新手增肌減脂跟練 - 10分鐘高效率全身動作跟練，動作口令清晰且節奏流暢。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "G94e9uvQ3uk", "type": "v", "title": "【居家生活直播】啞鈴/不只拿來練上半身 結合下肢…強度更有感", "channel": "World Gym Taiwan", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "上下肢復合訓練 - World Gym教官團隊直播教學，將啞鈴融入深蹲與弓箭步。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "bJhp-NmBTMw", "type": "v", "title": "10分鐘⏱啞鈴練全身", "channel": "Iron士倫", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "全身高強度阻力跟練 - 台灣知名健人Iron士倫親自示範，10分鐘高密度全身刺激。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "09dGEpQMh3I", "type": "v", "title": "每天抽出7分鐘，燃燒手臂脂肪！11組居家啞鈴「手臂肩膀」微重訓", "channel": "健康2.0", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "女性手臂肩膀微重訓 - TVBS健康2.0專題，針對上班族消除蝴蝶袖與緊實肩膀線條。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "U6bKyUQMkVU", "type": "v", "title": "10分鐘居家肩部啞鈴訓練【中級版】", "channel": "Eugene Wong", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "肩部專項增肌 - 三角肌前中後束全覆蓋，打造3D飽滿立體肩膀線條。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "FLqunkz38Vk", "type": "v", "title": "啞鈴訓練EP2｜前三角與胸肌，讓你的正面更加壯碩！", "channel": "營養健身葛格Peeta", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "胸部與前三角專項 - 詳細講解胸推角度、夾胸弧度與前三角肌的協同發力技巧。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "wl982nVf988", "type": "v", "title": "居家啞鈴怎麼推？【重裝來訓練】Feat.＠lron士倫", "channel": "TeamJoined TV", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "胸肌啟動與臥推技巧 - 深入拆解居家無臥推凳時的啞鈴地雷推與臥推動作力線。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "yWI9nDdRiaw", "type": "v", "title": "【楷教練】在家用一對啞鈴練胸，其實把這三個動作做好就很夠了", "channel": "楷教練", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "胸肌極簡高效3動作 - 資深健美教練親授，專注於動作行程與肌肉控制度。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "D5giZ7eSaYc", "type": "v", "title": "一週兩次【居家練全身】只需要啞鈴 完整圖示一看就會！- 健人訓練", "channel": "健人蓋伊", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "一週兩次全身課表 - 健人蓋伊經典居家課表，動作圖示完整，適合忙碌上班族。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "5PBEodvSVjU", "type": "v", "title": "在家健身的【兩樣神器】4天練全身｜健人訓練", "channel": "健人蓋伊", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "4天全身循環分割 - 介紹啞鈴搭配彈力帶的居家四天課表配置與動作要領。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "RFhJVrRgDfs", "type": "v", "title": "【在家4天練全身】超高CP值! 必收藏訓練影片｜健人訓練", "channel": "健人蓋伊", "region": "台灣", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "高CP值居家增肌 - 蓋伊親自示範每個肌群最佳孤立與複合動作，累計百萬點閱。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "ATQ_nb7poXQ", "type": "v", "title": "【超高CP值8個動作】在家訓練肩膀 三頭肌｜健人訓練", "channel": "健人蓋伊", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "中片（5–15 分鐘）", "aud": "動作參考", "note": "肩膀與三頭手臂專項 - 精選8個在家用一對啞鈴即可完美刺激肩臂線條的高效動作。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "BD-7S3Sl7Tw", "type": "s", "title": "✅完美啞鈴划船🫵#健身 #重訓 #訓練 #啞鈴划船", "channel": "ProCJ_Fitness", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "單手啞鈴划船背闊肌核心發力細節，防止聳肩代償。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "UARaxTGjRr8", "type": "s", "title": "居家哑铃手臂训练，每个动作12次各5组", "channel": "健身短視頻", "region": "其他", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "手臂高密度刺激：二頭彎舉、三頭後伸動作組合。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "yOEzX_ONEOE", "type": "s", "title": "動作做對事半功倍！！ #啞鈴訓練 #健身乾貨", "channel": "健身精華乾貨", "region": "其他", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "啞鈴動作常見代償錯誤修正與標準握持軌跡解析。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "oKwGc8fcDmY", "type": "s", "title": "力量训练高效动作居家锻炼健身健身动作", "channel": "居家力量打卡", "region": "其他", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "短時爆發力復合訓練動作，強化核心與全身協調。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "KlaqUuVaOe8", "type": "s", "title": "一對啞鈴練上身🔥", "channel": "女力健身 Nuli App", "region": "台灣", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "專為女性設計的快速上身緊實動作：推舉、划船與彎舉。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "WHZOkBx4wDA", "type": "s", "title": "用水瓶練上肢肌力，抗老、防失智！#上肢運動 #坐姿", "channel": "udn元氣網", "region": "台灣", "posture": "坐姿", "goal": ["肌力"], "equip": "影片使用水瓶", "len": "短片（5 分鐘內）", "aud": "長者團課", "note": "聯合報元氣網短影音，教長輩坐姿用水瓶維持手臂肌力"},
+ {"id": "jNIXHkqIp3o", "type": "s", "title": "【ダンベル】腕トレ４選 #筋肉", "channel": "あつみゆうすけ", "region": "日本", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "25秒精煉展示4種高效手臂線條塑造動作（二頭/三頭）。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "HsonEAwiZd8", "type": "s", "title": "5kgのダンベル１つ！肩を超デカくする筋トレ！", "channel": "リアルバキKYOの筋トレLife", "region": "日本", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "單手5KG啞鈴打造立體南瓜肩，側平舉與前平舉孤立刺激。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "nDZmlS4lXxM", "type": "s", "title": "5kgのダンベルで確実に腕が太くなるアームカールの方法！", "channel": "リアルバキKYOの筋トレLife", "region": "日本", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "二頭彎舉動作技巧：控制下落離心速度與手腕微旋。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "S0Tf2OqH9zk", "type": "s", "title": "5kgのダンベルで5分！血管バキバキの最高の前腕を作る筋トレ！", "channel": "リアルバキKYOの筋トレLife", "region": "日本", "posture": "站姿", "goal": ["肌力", "握力與手部"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "5分鐘前臂肌群極限泵感：腕屈伸與靜力捏握訓練。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "CwpXMKYsizE", "type": "s", "title": "5kgのダンベルで自宅で3分！腕を太くしたいならこの筋トレをやれ！", "channel": "リアルバキKYOの筋トレLife", "region": "日本", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "3分鐘極限手臂充血跟練，二頭與三頭交替刺激。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "kir4Fn1EH3U", "type": "s", "title": "自宅で5kgのダンベルのみ！デカい肩を作る筋トレ！", "channel": "リアルバキKYOの筋トレLife", "region": "日本", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "居家無器械輔助，僅靠單對啞鈴完成肩膀全束訓練。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "ZFrcXOv3Yxc", "type": "s", "title": "ダンベルだけでできる上腕三頭筋トレ３選！", "channel": "吉樹マッチョ【yoshiki macho】", "region": "日本", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "17秒快速示範3種刺激肱三頭肌外側頭與長頭的經典動作。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "PMxOinHyEKo", "type": "s", "title": "【短時間】自宅でもできる5kgのダンベルのみで腕を太くするトレーニング", "channel": "松尾トレーナー", "region": "日本", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "日本教練示範居家5公斤啞鈴手臂高效率增肌動作。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "0Lr1worSyHM", "type": "s", "title": "팔 근육 키우는 덤벨 이두운동 모음 #Shorts", "channel": "권일황TV - Fitness", "region": "韓國", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "韓國健身教練示範快速打造手臂線條的啞鈴二頭動作組。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "avhjL5UD2Jk", "type": "s", "title": "벤치 없이 하는 덤벨 가슴운동 루틴 #홈트 #가슴운동", "channel": "권일황TV - Fitness", "region": "韓國", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "居家無臥推凳的啞鈴練胸技巧：地板胸推與窄握內夾。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "nFRehhrOedE", "type": "s", "title": "아령 어깨운동 4가지 동작", "channel": "임팩트", "region": "韓國", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "13秒精華展示4種塑造直角肩的啞鈴肩膀動作。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "2aRqFWIvXf4", "type": "s", "title": "4가지 덤벨컬 변형, 팔뚝(이두,전완근) 운동 방법", "channel": "근육TV", "region": "韓國", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "4種啞鈴彎舉變式：錘式彎舉、集中彎舉與旋轉彎舉。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "q4I4P_xix1c", "type": "s", "title": "어깨 운동 이렇게 안하면 어깨 박살납니다", "channel": "근육TV", "region": "韓國", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "肩膀側平舉常見聳肩錯誤防範，保護旋轉肌袖。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "FMnXeSiih-Y", "type": "s", "title": "이두 빈부격차 #shorts", "channel": "힙으뜸", "region": "韓國", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "韓國百萬健身教練沈娥燈示範女性啞鈴二頭肌訓練技巧。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "ajITUREzEQ0", "type": "s", "title": "9 Full Body Dumbbell Exercises for Your Next Workout", "channel": "Workout Essentials", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "9個全身功能性動作循環（深蹲、羅馬尼亞硬舉、推舉）。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "HOsDoMoSnuE", "type": "s", "title": "Full Body Dumbbell Workout | 5 Exercises", "channel": "Home Fitness USA", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "5個動作高效激活全身肌群，適合居家短時訓練。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "yZ_rbF0ppzw", "type": "s", "title": "Upper Body Dumbbell Workout | 5 Exercises", "channel": "Upper Body Tone", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "針對胸部、背部與肩膀的5個上肢專項雕塑動作。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "SNUGnKBdgsI", "type": "s", "title": "The BEST Beginner Full Body Dumbbell Workout for Women", "channel": "Women Strength Fit", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "女性新手友善全身啞鈴課表：推舉、前蹲、划船循環。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "34vTDVqSy_Y", "type": "s", "title": "20 Minute Upper Body Dumbbell Workout (At Home)", "channel": "20Min Daily Fit", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "20分鐘居家無器械輔助上半身啞鈴流暢跟練教學。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "eEWtNj-qXdw", "type": "s", "title": "Get a Full-Body Workout at Home with Just a Pair of Dumbbells", "channel": "Quick Home Routine", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "一對啞鈴從肩膀推舉、深蹲到核心俄羅斯轉體完整示範。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "ojNJvUQLXt4", "type": "s", "title": "GROW A WIDER BACK: Why Your Dumbbell Row Isn't Working!", "channel": "Back Mechanics Pro", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "單臂啞鈴划船動作力線力矩深度解析，激活整面背肌。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "lYH24HZr0zU", "type": "s", "title": "Exercises for 3D shoulders ✅", "channel": "Oliver Sjostrom", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "18秒展示打造立體三角肌的3大核心啞鈴動作。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "rOUq54967Xk", "type": "s", "title": "9 Powerfull Dumbbell Chest Workout to Transform Upper Body", "channel": "Aesthetic Motivation", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "9種高效啞鈴胸肌動作組合，強化上胸、中胸與下胸。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "nl-a0cAbQNs", "type": "s", "title": "9 Powerfull Dumbbell Shoulder Workout to Transform Upper Body", "channel": "Aesthetic Motivation", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "9個強效肩膀雕塑動作：阿諾推舉、側平舉、面拉等。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "-q88kOTezXk", "type": "s", "title": "4 Dumbbell Moves For Sculpted Shoulders", "channel": "PaulSklarXFit", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "4個經典肩部塑形動作，注重關節穩定與離心控制。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "R2AhTyQkcZU", "type": "s", "title": "My dumbbell only shoulder workout ✨save & try it 💪🏼", "channel": "Vikki Power", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "女性專屬啞鈴肩膀塑形菜單，打造優雅肩頸線條。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "ZoZxjsIgROI", "type": "s", "title": "DUMBBELL DEADLIFT FOR: LOWER BACK vs HAMSTRINGS AND GLUTES", "channel": "Valeriy ProTrainer", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "啞鈴硬舉角度分析：下背、大腿後側膕繩肌與臀大肌對比。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "LOvQLuIusXY", "type": "s", "title": "9 Powerfull Dumbbell Leg Workout to Transform Lower Body", "channel": "Aesthetic Motivation", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "9個下半身啞鈴精華動作：高腳杯深蹲、箭步蹲、分腿蹲。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "1R8xVRE15Bs", "type": "s", "title": "3 BEST Exercises for BIGGER Hamstrings", "channel": "Andrew Kwong (DeltaBolic)", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "3個孤立刺激大腿後側膕繩肌的最佳啞鈴訓練動作。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "NL5TJGRv_wQ", "type": "s", "title": "Top Dumbbell Back Workout Variations You Need to Try!", "channel": "KC FITNESS", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "啞鈴練背多角度變化：俯身划船、寬握划船與直臂後拉。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "w_SUfk8z76Q", "type": "s", "title": "dumbbell only back day workout", "channel": "Midas Movement", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "僅靠啞鈴打造V型背部線條的背部專項課表。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "nPmxA2P9ZHw", "type": "s", "title": "Train Your Arms With Dumbbells Only! | Biceps & Triceps", "channel": "Midas Movement", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "純啞鈴手臂轟炸：二頭肌與三頭肌超級組動作示範。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "x-XVCNb449o", "type": "s", "title": "9 Powerfull Dumbbell Arm Workout to Transform Upper Body", "channel": "Aesthetic Motivation", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "9個上肢手臂塑形動作：錘式彎舉、頸後臂屈伸等。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "kjpg2XhDN6w", "type": "s", "title": "A dumbbell workout to tone your biceps, triceps & shoulders", "channel": "Midas Movement", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "結合二頭、三頭與肩膀的三合一手臂塑形訓練。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "RqHptAnbrb4", "type": "s", "title": "Dumbbell biceps + forearm movements to try!🔥", "channel": "Midas Movement", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "握力與手部"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "強化二頭肌峰與前臂握力的複合動作組。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "-igJpCtTLgU", "type": "s", "title": "Full body dumbbell workout to build muscle & burn fat (no bench)", "channel": "Midas Movement", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "有氧律動", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "無臥推凳全身增肌燃脂課表，包含高腳杯蹲與復合推舉。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "a3-8zoRbePc", "type": "s", "title": "Full Body Dumbbell Workout! #shorts", "channel": "Pierre Dalati", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "有氧律動", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "17秒節奏流暢的全身啞鈴功能性循環動作。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "9IoKUQ0NAK4", "type": "s", "title": "Do these instead of running (fullbody dumbbell workout)", "channel": "Elika Bang", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "有氧律動", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "替代傳統跑步的全身啞鈴肌耐力與心肺燃脂短影音。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "hrEz4pBxGeI", "type": "s", "title": "Train your CORE/ABS with a Single Dumbbell!", "channel": "Midas Movement", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "單顆啞鈴鍛鍊腹肌與核心：俄羅斯轉體、伐木與懸垂舉腿。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "BFmn-uy1Ynk", "type": "s", "title": "4 Exercises For Six Pack Abs (With Dumbbell)", "channel": "Oliver Sjostrom", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "4個利用啞鈴負重打造清晰腹肌線條的進階核心動作。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "lMCzX0UGNzM", "type": "s", "title": "TOP 7 Dumbbell Tricep Exercises for Massive Gains", "channel": "Aesthetic Motivation", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "7大肱三頭肌啞鈴動作精選：仰臥臂屈伸、窄推與俯身後伸。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "1-KKOKNuzRo", "type": "s", "title": "Dumbbell only TRICEP WORKOUT!", "channel": "Max Euceda", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "高人氣健身博主解析純啞鈴打造飽滿三頭肌的科學訓練法。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "nkmEenCOq7A", "type": "s", "title": "Add SIZE & DEFINITION to your Triceps with these dumbbells only moves!", "channel": "Midas Movement", "region": "美國澳洲", "posture": "站姿", "goal": ["肌力"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "手臂三頭肌增粗與線條雕塑的孤立動作技巧。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"},
+ {"id": "l2FsrPFDbNI", "type": "s", "title": "保加利亞分腿蹲：避免這些錯誤，提升訓練效果！", "channel": "Be Yourself", "region": "其他", "posture": "站姿", "goal": ["肌力", "上下肢結合"], "equip": "影片使用啞鈴，可換水瓶", "len": "短片（5 分鐘內）", "aud": "動作參考", "note": "深入講解下肢黃金動作保加利亞分腿蹲軀幹角度與膝蓋軌跡。一般成人內容，給老師擴充動作庫；帶長輩時請減量、放慢、改坐姿或扶椅。"}
 ];
 
 /* ---------- 狀態與儲存 ---------- */
@@ -656,7 +750,7 @@ const LS = {fav:"bottle_fav", mine:"bottle_mine", notes:"bottle_notes", theme:"b
 function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 let favs=load(LS.fav,[]), mine=load(LS.mine,[]), notes=load(LS.notes,{});
-const state={q:"",posture:null,goal:null,equip:null,region:null,len:null,favOnly:false};
+const state={q:"",aud:null,posture:null,goal:null,equip:null,region:null,len:null,favOnly:false};
 
 const POSTURES=["坐姿","站姿","坐站混合","臥姿"];
 const GOALS=["肌力","有氧律動","上下肢結合","握力與手部","暖身伸展"];
@@ -669,7 +763,7 @@ function mkFilters(el,key,list){
   list.forEach(v=>{const b=document.createElement("button");b.type="button";b.className="fb";b.textContent=v;
     b.onclick=()=>{state[key]=state[key]===v?null:v;render()};box.appendChild(b)});
 }
-mkFilters("fPosture","posture",POSTURES);mkFilters("fGoal","goal",GOALS);mkFilters("fEquip","equip",EQUIPS);
+mkFilters("fAud","aud",["長者團課","動作參考"]);mkFilters("fPosture","posture",POSTURES);mkFilters("fGoal","goal",GOALS);mkFilters("fEquip","equip",EQUIPS);
 mkFilters("fRegion","region",REGIONS);mkFilters("fLen","len",LENS);
 
 document.getElementById("q").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();render()});
@@ -681,7 +775,7 @@ ft.onclick=()=>setF(!fOpen);
 // 捲過篩選區後自動收起，讓影片占滿畫面
 let autoCollapsed=false;
 window.addEventListener("scroll",()=>{if(!autoCollapsed&&fOpen){const r=fp.getBoundingClientRect();if(r.bottom<60){setF(false);autoCollapsed=true}}},{passive:true});
-document.getElementById("clearF").onclick=()=>{Object.assign(state,{q:"",posture:null,goal:null,equip:null,region:null,len:null,favOnly:false});document.getElementById("q").value="";render()};
+document.getElementById("clearF").onclick=()=>{Object.assign(state,{q:"",aud:null,posture:null,goal:null,equip:null,region:null,len:null,favOnly:false});document.getElementById("q").value="";render()};
 
 function all(){return [...mine,...BUILT_IN]}
 function ytUrl(v){return v.type==="p"?`https://www.youtube.com/playlist?list=${v.id}`:v.type==="s"?`https://www.youtube.com/shorts/${v.id}`:`https://www.youtube.com/watch?v=${v.id}`}
@@ -689,11 +783,12 @@ function thumb(v){return v.type==="p"?null:`https://i.ytimg.com/vi/${v.id}/hqdef
 
 function render(){
   const grid=document.getElementById("grid");grid.innerHTML="";
-  ["fPosture","fGoal","fEquip","fRegion","fLen"].forEach((id,i)=>{const key=["posture","goal","equip","region","len"][i];
+  ["fAud","fPosture","fGoal","fEquip","fRegion","fLen"].forEach((id,i)=>{const key=["aud","posture","goal","equip","region","len"][i];
     [...document.getElementById(id).children].forEach(b=>b.classList.toggle("on",state[key]===b.textContent))});
   document.getElementById("favOnly").classList.toggle("on",state.favOnly);
   const list=all().filter(v=>{
     if(state.favOnly&&!favs.includes(v.id))return false;
+    if(state.aud&&(v.aud||"長者團課")!==state.aud)return false;
     if(state.posture&&v.posture!==state.posture)return false;
     if(state.goal&&!v.goal.includes(state.goal))return false;
     if(state.equip&&v.equip!==state.equip)return false;
@@ -703,7 +798,7 @@ function render(){
     return true});
   document.getElementById("count").textContent=`顯示 ${list.length} 支，共 ${all().length} 支`;
   const act=document.getElementById("active");act.innerHTML="";
-  [["posture","姿勢"],["goal","目標"],["equip","器材"],["region","語區"],["len","長度"]].forEach(([k,l])=>{if(state[k]){const b=document.createElement("button");b.className="fb on";b.type="button";b.textContent=`${state[k]} ×`;b.onclick=()=>{state[k]=null;render()};act.appendChild(b)}});
+  [["aud","適用"],["posture","姿勢"],["goal","目標"],["equip","器材"],["region","語區"],["len","長度"]].forEach(([k,l])=>{if(state[k]){const b=document.createElement("button");b.className="fb on";b.type="button";b.textContent=`${state[k]} ×`;b.onclick=()=>{state[k]=null;render()};act.appendChild(b)}});
   if(state.favOnly){const b=document.createElement("button");b.className="fb on o";b.type="button";b.textContent="只看收藏 ×";b.onclick=()=>{state.favOnly=false;render()};act.appendChild(b)}
   document.getElementById("empty").style.display=list.length?"none":"block";
   list.forEach(v=>{
@@ -719,7 +814,7 @@ function render(){
       <div class="vb">
         <h3>${v.title}</h3>
         <div class="meta">${v.channel} ・ ${v.region}</div>
-        <div class="tags"><span class="tag p">${v.posture}</span>${v.goal.map(g=>`<span class="tag">${g}</span>`).join("")}<span class="tag e">${v.equip}</span><span class="tag e">${v.len}</span></div>
+        <div class="tags"><span class="tag ${(v.aud||"長者團課")==="長者團課"?"p":"e"}">${v.aud||"長者團課"}</span><span class="tag p">${v.posture}</span>${v.goal.map(g=>`<span class="tag">${g}</span>`).join("")}<span class="tag e">${v.equip}</span><span class="tag e">${v.len}</span></div>
         <div class="note"><strong>帶班筆記：</strong>${v.note}</div>
         <textarea class="mynote" data-id="${v.id}" placeholder="我的備註（只存在這台裝置）">${notes[v.id]||""}</textarea>
         <div class="vact">
@@ -773,7 +868,7 @@ document.getElementById("addForm").addEventListener("submit",e=>{
   e.preventDefault();const f=new FormData(e.target);const p=parseYT(f.get("url"));
   if(!p){alert("讀不出 YouTube 網址，請確認格式（watch?v=…、youtu.be/…、shorts/… 或 playlist?list=…）");return}
   if(all().some(x=>x.id===p.id)){alert("這支影片已經在資料庫裡了");return}
-  mine.unshift({id:p.id,type:p.type,title:f.get("title"),channel:f.get("channel")||"自行加入",region:f.get("region"),posture:f.get("posture"),goal:[f.get("goal")],equip:f.get("equip"),len:f.get("len"),note:f.get("note")||"（自行加入）"});
+  mine.unshift({id:p.id,type:p.type,title:f.get("title"),channel:f.get("channel")||"自行加入",region:f.get("region"),aud:f.get("aud"),posture:f.get("posture"),goal:[f.get("goal")],equip:f.get("equip"),len:f.get("len"),note:f.get("note")||"（自行加入）"});
   save(LS.mine,mine);e.target.reset();render();document.getElementById("db").scrollIntoView();
 });
 document.getElementById("exportBtn").onclick=()=>{
