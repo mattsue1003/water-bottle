@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>水瓶啞鈴團體運動資料庫｜社區長輩有氧與肌力</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#028090; --teal-deep:#015f6b; --teal-soft:#dff3f5;
+  --orange:#E8552D; --amber:#F4A93C; --amber-soft:#fff1d8;
+  --ink:#12343B; --ink-2:#3b5a61; --mute:#6b8188;
+  --bg:#f3f9fa; --card:#ffffff; --line:#cfe3e6;
+  --ok:#2f8f5b; --warn:#c7641a;
+  --radius:18px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="dark"]{
+  --teal:#3fb7c6; --teal-deep:#8fdbe3; --teal-soft:#123a40;
+  --orange:#ff7a52; --amber:#ffc35e; --amber-soft:#3d2f14;
+  --ink:#eaf4f5; --ink-2:#c7d8db; --mute:#93aab0;
+  --bg:#0f1e22; --card:#172a2f; --line:#2b4a51;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",system-ui,sans-serif;font-size:18px;line-height:1.75}
+h1,h2,h3{line-height:1.25;margin:0 0 .4em}
+h1{font-size:clamp(2rem,6vw,3.4rem);font-weight:900;letter-spacing:.01em}
+h2{font-size:clamp(1.6rem,4vw,2.3rem);font-weight:900;color:var(--teal-deep)}
+h3{font-size:1.3rem;font-weight:700}
+p{margin:.3em 0 .9em}
+a{color:var(--teal)}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+section{padding:56px 0}
+.lead{font-size:1.2rem;color:var(--ink-2);max-width:46em}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:62px}
+.brand{font-weight:900;color:var(--teal-deep);text-decoration:none;font-size:1.05rem;white-space:nowrap}
+.nav{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav a{text-decoration:none;color:var(--ink-2);padding:8px 12px;border-radius:999px;white-space:nowrap;font-weight:500}
+.nav a:hover{background:var(--teal-soft);color:var(--teal-deep)}
+.theme{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px}
+
+/* hero */
+.hero{padding:64px 0 48px;background:linear-gradient(180deg,var(--teal-soft) 0%,var(--bg) 100%)}
+.hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.hero h1 span{display:block;color:var(--teal)}
+.hero .lead{font-size:1.25rem}
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#fff;border:0;border-radius:14px;padding:14px 22px;font-size:1.1rem;font-weight:700;text-decoration:none}
+.cta.alt{background:var(--card);color:var(--teal-deep);border:2px solid var(--teal)}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.scale{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.scale h3{margin-bottom:6px}
+.scale .row{display:grid;grid-template-columns:5.2em 1fr 4.5em;gap:12px;align-items:center;padding:8px 0;border-top:1px dashed var(--line)}
+.scale .row:first-of-type{border-top:0}
+.bar{height:22px;border-radius:6px;background:linear-gradient(90deg,var(--teal),#5ec6d2)}
+.scale .w{font-weight:700;color:var(--teal-deep);text-align:right}
+.scale small{color:var(--mute);font-size:.9rem;display:block;margin-top:8px;line-height:1.5}
+
+/* two-column pros/cons */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.card.good{border-top:8px solid var(--ok)}
+.card.limit{border-top:8px solid var(--warn)}
+.card.fix{border-top:8px solid var(--teal)}
+.card ul{padding-left:1.2em;margin:.4em 0}
+.card li{margin:.35em 0}
+.tip{background:var(--amber-soft);border-left:6px solid var(--amber);padding:14px 18px;border-radius:0 12px 12px 0;margin:18px 0}
+.tip strong{color:var(--ink)}
+
+/* evidence */
+.ev{display:grid;gap:18px}
+.evc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:grid;grid-template-columns:150px 1fr;gap:20px}
+.lvl{display:flex;flex-direction:column;gap:8px}
+.badge{display:inline-block;border-radius:10px;padding:6px 10px;font-weight:700;font-size:.95rem;line-height:1.3}
+.b1{background:#e4f5ea;color:#1f6b40}
+.b2{background:#e6f1fb;color:#1b4e8a}
+.b3{background:var(--amber-soft);color:#8a5a0b}
+:root[data-theme="dark"] .b1{background:#17402a;color:#9fe3bb}
+:root[data-theme="dark"] .b2{background:#16304a;color:#a9cdf5}
+:root[data-theme="dark"] .b3{background:#3d2f14;color:#ffd58a}
+.evc h3{margin-bottom:4px}
+.evc .cite{color:var(--mute);font-size:.95rem;margin-bottom:10px}
+.evc dl{margin:0;display:grid;grid-template-columns:5.5em 1fr;gap:6px 12px}
+.evc dt{font-weight:700;color:var(--teal-deep)}
+.evc dd{margin:0}
+.so{margin-top:10px;padding:10px 14px;background:var(--teal-soft);border-radius:12px;font-weight:500}
+.verdict{background:var(--teal);color:#fff;border-radius:var(--radius);padding:26px 28px;margin-top:22px}
+.verdict h3{color:#fff;margin-bottom:10px}
+.verdict ul{margin:0;padding-left:1.2em}
+.verdict li{margin:.4em 0}
+.rpe{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:14px}
+.rpe div{background:rgba(255,255,255,.14);border-radius:10px;padding:10px 8px;text-align:center;font-size:.95rem;line-height:1.4}
+.rpe div b{display:block;font-size:1.3rem}
+.rpe div.hit{background:var(--amber);color:var(--ink)}
+
+/* combine */
+.combo{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.combo .card h3{color:var(--teal-deep)}
+.combo .pair{display:flex;align-items:center;gap:8px;margin:8px 0;flex-wrap:wrap}
+.chip{background:var(--teal-soft);color:var(--teal-deep);border-radius:999px;padding:4px 12px;font-weight:700;font-size:.95rem}
+.chip.o{background:var(--amber-soft);color:#8a5a0b}
+:root[data-theme="dark"] .chip.o{color:#ffd58a}
+.plus{font-weight:900;color:var(--orange);font-size:1.3rem}
+
+/* database */
+.tools{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;position:sticky;top:calc(62px + env(safe-area-inset-top,0px));z-index:10}
+.search{width:100%;font-size:1.1rem;padding:12px 16px;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-family:inherit}
+.search:focus{outline:3px solid var(--amber);border-color:var(--amber)}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.frow .lab{font-weight:700;color:var(--teal-deep);margin-right:4px;white-space:nowrap}
+.fb{border:1.5px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:999px;padding:6px 14px;font-weight:500}
+.fb.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.fb.on.o{background:var(--orange);border-color:var(--orange)}
+.count{margin-left:auto;color:var(--mute);font-size:.95rem;white-space:nowrap}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-top:22px}
+.v{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.thumb{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,var(--teal) 0%,var(--teal-deep) 100%);cursor:pointer;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:1.2rem;padding:16px;text-align:center}
+.thumb .play{position:absolute;right:12px;bottom:12px;background:var(--orange);color:#fff;border-radius:999px;padding:6px 14px;font-weight:700;font-size:.95rem}
+.thumb .dur{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,.65);color:#fff;border-radius:8px;padding:2px 8px;font-size:.9rem}
+.vb{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.vb h3{font-size:1.15rem;margin:0}
+.meta{color:var(--mute);font-size:.95rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.88rem;border-radius:8px;padding:2px 9px;background:var(--teal-soft);color:var(--teal-deep);font-weight:500}
+.tag.p{background:var(--amber-soft);color:#8a5a0b}
+:root[data-theme="dark"] .tag.p{color:#ffd58a}
+.tag.e{background:#eef0f2;color:#4a5a60}
+:root[data-theme="dark"] .tag.e{background:#263b41;color:#b9ccd1}
+.note{font-size:1rem;color:var(--ink-2)}
+.vact{display:flex;gap:8px;margin-top:auto;padding-top:6px;flex-wrap:wrap}
+.vact a,.vact button{border:1.5px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:10px;padding:6px 12px;text-decoration:none;font-size:.95rem}
+.vact button.fav.on{background:var(--amber-soft);border-color:var(--amber);color:#8a5a0b}
+.vact .yt{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700}
+.mynote{width:100%;border:1.5px dashed var(--line);border-radius:10px;padding:8px 10px;font-family:inherit;font-size:.95rem;background:var(--bg);color:var(--ink);resize:vertical;min-height:40px}
+.empty{padding:40px;text-align:center;color:var(--mute);background:var(--card);border:1px dashed var(--line);border-radius:var(--radius);margin-top:22px}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(5,25,30,.8);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal.open{display:flex}
+.mbox{background:var(--card);border-radius:18px;width:min(960px,100%);overflow:hidden}
+.mbox .frame{aspect-ratio:16/9;background:#000}
+.mbox iframe{width:100%;height:100%;border:0;display:block}
+.mhead{display:flex;gap:12px;align-items:flex-start;padding:14px 18px}
+.mhead h3{flex:1;font-size:1.1rem;margin:0}
+.mhead a{white-space:nowrap}
+.mclose{border:0;background:var(--teal-soft);color:var(--teal-deep);border-radius:10px;padding:6px 12px;font-weight:700}
+.mhint{padding:0 18px 14px;color:var(--mute);font-size:.95rem}
+
+/* add form */
+.addbox{background:var(--card);border:2px dashed var(--teal);border-radius:var(--radius);padding:22px;margin-top:28px}
+.addbox form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.addbox input,.addbox select,.addbox textarea{width:100%;font-family:inherit;font-size:1rem;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.addbox .full{grid-column:1/-1}
+.addbox label{font-weight:700;color:var(--teal-deep);font-size:.95rem;display:block;margin-bottom:4px}
+.btn{background:var(--teal);color:#fff;border:0;border-radius:12px;padding:12px 20px;font-weight:700;font-size:1.05rem}
+.btn.ghost{background:var(--card);color:var(--teal-deep);border:2px solid var(--teal)}
+.io{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+/* safety */
+.safe{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.safe ol{padding-left:1.3em;margin:.4em 0}
+.safe li{margin:.4em 0}
+footer{padding:40px 0 60px;color:var(--mute);font-size:.95rem;text-align:center;border-top:1px solid var(--line)}
+footer b{color:var(--ink-2)}
+
+@media (max-width:860px){
+  body{font-size:17px}
+  .hero .wrap,.grid2,.grid3,.combo,.evc,.addbox form{grid-template-columns:1fr}
+  .evc .lvl{flex-direction:row;flex-wrap:wrap}
+  .rpe{grid-template-columns:repeat(5,1fr)}
+  .rpe div{font-size:.8rem;padding:8px 4px}
+  .tools{position:static}
+  section{padding:40px 0}
+  .nav{display:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">水瓶啞鈴團體運動資料庫</a>
+    <nav class="nav">
+      <a href="#why">為什麼用水瓶</a>
+      <a href="#evidence">研究怎麼說</a>
+      <a href="#combo">上肢＋下肢怎麼配</a>
+      <a href="#db">影片資料庫</a>
+      <a href="#safe">安全提醒</a>
+    </nav>
+    <button class="theme" id="themeBtn" aria-label="切換深色模式">深色</button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1>一人兩瓶水，<span>全班一起練肌力</span></h1>
+      <p class="lead">給社區老師、據點志工與長照工作者的 YouTube 影片資料庫：用隨手可得的瓶裝水或輕啞鈴，帶阿公阿嬤做有氧與肌力訓練。可依坐姿、站姿、訓練目標與影片長度篩選，也能加入自己找到的影片。</p>
+      <div class="ctas">
+        <a class="cta" href="#db">直接找影片</a>
+        <a class="cta alt" href="#evidence">先看輕重量有沒有效</a>
+      </div>
+    </div>
+    <div class="scale" aria-label="常見瓶裝水重量">
+      <h3>瓶子多大，就是多重</h3>
+      <div class="row"><span>350 ml</span><div class="bar" style="width:23%"></div><span class="w">約 0.4 kg</span></div>
+      <div class="row"><span>600 ml</span><div class="bar" style="width:40%"></div><span class="w">約 0.6 kg</span></div>
+      <div class="row"><span>1000 ml</span><div class="bar" style="width:67%"></div><span class="w">約 1.0 kg</span></div>
+      <div class="row"><span>1500 ml</span><div class="bar" style="width:100%"></div><span class="w">約 1.5 kg</span></div>
+      <small>水 1 公升約 1 公斤。裝細沙或米可以更重：同一個 600 ml 瓶子裝滿乾沙約 0.9 kg。瓶蓋務必鎖緊、用膠帶再纏一圈。</small>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <h2>為什麼用水瓶？好處、限制與解法</h2>
+    <p class="lead">水瓶不是「替代品」，它是社區團體課裡最容易普及的阻力器材。但要讓它真的練到肌力，需要知道它的限制在哪裡。</p>
+    <div class="grid3">
+      <div class="card good">
+        <h3>好處</h3>
+        <ul>
+          <li><strong>道具隨手可得</strong>：便利商店、家裡都有，不用採購、不用收納，據點與居家都能做。</li>
+          <li><strong>所有人都能參與</strong>：握不住啞鈴的長輩握得住瓶身；坐輪椅、站不穩的人也能坐著練。</li>
+          <li><strong>重量可以微調</strong>：倒掉一半就變輕，裝滿就變重，同一堂課能同時照顧體能差異大的學員。</li>
+          <li><strong>安全</strong>：掉下來不傷腳、不傷地板；瓶子軟，撞到人也不會受傷。</li>
+          <li><strong>容易回家複製</strong>：課堂學會的動作，回家拿同款瓶子就能做，有助養成習慣。</li>
+        </ul>
+      </div>
+      <div class="card limit">
+        <h3>限制與障礙</h3>
+        <ul>
+          <li><strong>超負荷偏輕</strong>：兩瓶 600 ml 只有 1.2 公斤，對多數長輩的肩、臂、腿來說，做 10 下不會累，刺激不足。</li>
+          <li><strong>重量不夠、次數也不夠時，效果確實會打折</strong>：肌力訓練需要肌肉「真的有點吃力」，輕鬆做完的動作比較像活動關節，不算訓練。</li>
+          <li><strong>下肢容易被忽略</strong>：拿著瓶子自然偏向練上肢，但防跌最需要的是大腿與臀部。</li>
+          <li><strong>漸進困難</strong>：瓶子大小有限，重量很難持續往上加。</li>
+          <li><strong>節奏容易被影片牽著走</strong>：跟著影片做容易變成「跟上節奏」而不是「做到吃力」。</li>
+        </ul>
+      </div>
+      <div class="card fix">
+        <h3>怎麼補強</h3>
+        <ul>
+          <li><strong>先加次數，再加重量</strong>：同一瓶做到「最後 2、3 下很想停」，再換大瓶。</li>
+          <li><strong>換大瓶、裝沙</strong>：600 ml → 1 L → 1.5 L；或改裝乾沙、米、小石子。</li>
+          <li><strong>放慢速度</strong>：放下時數 3 秒，同樣的重量會變得吃力很多。</li>
+          <li><strong>縮短休息、多做一組</strong>：組數是水瓶訓練最好用的槓桿（見下方研究）。</li>
+          <li><strong>上肢動作綁下肢</strong>：肩推配坐站、側平舉配踮腳，每個動作都讓腿一起工作。</li>
+          <li><strong>有氧時段也拿著</strong>：律動、踏步時手持瓶子，上肢持續有負荷。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip"><strong>帶班口訣：</strong>「不是做完就好，是做到有點累才算。」每個動作問一次：「最後兩下有沒有感覺？」沒有感覺的人，請他換大瓶或再做一組。</div>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap">
+    <h2>輕重量真的有效嗎？研究怎麼說</h2>
+    <p class="lead">你記得的那篇研究確實存在，而且不只一篇。近十年的統合分析一致指出：<strong>只要每組做到接近力竭（很吃力、快做不動），輕重量和重重量在增加肌肉量上的效果相近；但在最大肌力上，重重量仍略勝一籌。</strong>以下依證據等級排列，並說明每篇研究是怎麼做的。</p>
+
+    <div class="ev">
+      <div class="evc">
+        <div class="lvl">
+          <span class="badge b1">統合分析</span>
+          <span class="badge b2">證據等級 1a</span>
+          <span class="badge b3">對象：健康成人</span>
+        </div>
+        <div>
+          <h3>輕重量 vs 重重量：肌肥大相近，最大肌力重重量較佳</h3>
+          <div class="cite">Schoenfeld BJ, Grgic J, Ogborn D, Krieger JW. J Strength Cond Res. 2017;31(12):3508–3523.</div>
+          <dl>
+            <dt>怎麼做的</dt><dd>系統性回顧 21 篇隨機對照試驗。條件：比較輕負荷（≤60% 1RM，約可做 15 下以上）與重負荷（＞60% 1RM）、<strong>每一組都做到暫時力竭</strong>、訓練至少 6 週、受試者無限制訓練的傷病。</dd>
+            <dt>結果</dt><dd>肌肉量增加兩組沒有顯著差異；1RM 最大肌力重負荷組顯著較高，等長肌力則無差異。</dd>
+            <dt>品質</dt><dd>納入研究多為小樣本（每組約 10–20 人），對象以年輕成人為主；但結論在後續多篇統合分析中重複出現，一致性高。</dd>
+          </dl>
+          <div class="so">對社區課的意義：水瓶可以增肌，前提是每組要做到「很吃力」。只是如果目標是提重物、搬東西那種最大力量，重的器材仍比較有效。</div>
+        </div>
+      </div>
+
+      <div class="evc">
+        <div class="lvl">
+          <span class="badge b1">網絡統合分析</span>
+          <span class="badge b2">證據等級 1a</span>
+          <span class="badge b3">對象：健康成人</span>
+        </div>
+        <div>
+          <h3>低、中、高負荷三組比較：肌肥大不分輕重，肌力隨負荷遞增</h3>
+          <div class="cite">Lopez P, Radaelli R, Taaffe DR, et al. Med Sci Sports Exerc. 2021;53(6):1206–1216.</div>
+          <dl>
+            <dt>怎麼做的</dt><dd>納入 28 篇研究、747 位健康成人，所有組別都訓練到自覺力竭；用網絡統合分析同時比較低負荷（<60% 1RM）、中負荷（60–79%）與高負荷（≥80%）。</dd>
+            <dt>結果</dt><dd>肌肥大三組相近；最大肌力高負荷與中負荷都優於低負荷（標準化效應量約 0.6 與 0.35），高負荷略優於中負荷但未達顯著。未受訓者肌肥大反應較大。</dd>
+            <dt>品質</dt><dd>有做高品質研究的次群組分析，結果一致；仍以年輕與中年成人為主，直接推論到 80 歲以上需保守。</dd>
+          </dl>
+          <div class="so">對社區課的意義：把水瓶從 600 ml 換到 1.5 L（往「中負荷」靠近），長輩的肌力進步會更明顯；肌肉量則靠組數與吃力度。</div>
+        </div>
+      </div>
+
+      <div class="evc">
+        <div class="lvl">
+          <span class="badge b1">統合分析</span>
+          <span class="badge b2">證據等級 1a</span>
+          <span class="badge b3">對象：平均 67.8 歲長者</span>
+        </div>
+        <div>
+          <h3>專門看長者：中輕負荷只要次數夠，肌力也能明顯進步</h3>
+          <div class="cite">Csapo R, Alegre LM. Scand J Med Sci Sports. 2016;26(9):995–1006.</div>
+          <dl>
+            <dt>怎麼做的</dt><dd>統合 15 篇長者研究、448 人（平均 67.8 歲），比較重負荷（約 80% 1RM）與中輕負荷（約 45% 1RM）；另外單獨分析「總作功量相同」的研究，排除做得比較多的干擾。</dd>
+            <dt>結果</dt><dd>重負荷在肌力上有「略優」趨勢（效應量 0.43，p=0.06）；作功量相同的研究中差距更小（0.30）。肌肉量增加兩組都很小，重負荷略多。作者結論：只要做足夠次數，低於傳統建議的負荷也能在長者身上帶來可觀的肌力進步。</dd>
+            <dt>品質</dt><dd>目前最貼近社區長者的統合分析；納入研究之間的訓練安排差異大，肌肉量測量方法不一，解讀時以「肌力」結論為主。</dd>
+          </dl>
+          <div class="so">對社區課的意義：這篇最直接支持水瓶課程。關鍵詞是「足夠的次數」，也就是別停在 10 下，做到吃力為止。</div>
+        </div>
+      </div>
+
+      <div class="evc">
+        <div class="lvl">
+          <span class="badge b1">隨機對照試驗</span>
+          <span class="badge b2">證據等級 1b</span>
+          <span class="badge b3">對象：年輕成人</span>
+        </div>
+        <div>
+          <h3>輕重量「不做到力竭」就沒效：力竭是輕重量的必要條件</h3>
+          <div class="cite">Lasevicius T, Schoenfeld BJ, Silva-Batista C, et al. J Strength Cond Res. 2022;36(2):346–351.</div>
+          <dl>
+            <dt>怎麼做的</dt><dd>受試者兩腿分別做不同條件的腿伸展訓練 8 週，比較高負荷（80% 1RM）與低負荷（30% 1RM）、各自「做到力竭」與「不做到力竭」共四種情況，測量股四頭肌橫截面積與肌力。</dd>
+            <dt>結果</dt><dd>高負荷不論是否力竭，肌肥大相近；低負荷做到力竭的肌肥大與高負荷相近，但低負荷沒做到力竭的肌肥大明顯較少。</dd>
+            <dt>品質</dt><dd>樣本小、對象為年輕人，但設計乾淨（同一人兩腿對照），直接回答了「輕重量為什麼要做到累」這個問題。</dd>
+          </dl>
+          <div class="so">對社區課的意義：帶水瓶課最怕「大家輕鬆做完 10 下就換動作」。輕重量的效果幾乎全靠最後那幾下。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="verdict">
+      <h3>整理成一句話帶班</h3>
+      <ul>
+        <li>水瓶可以練肌力、可以增肌，前提是<strong>每組做到「很吃力、再 2 下就做不動」</strong>（自覺吃力度約 7–8 分，滿分 10）。</li>
+        <li>做不到吃力，就用三招：<strong>換大瓶、多做一組、放慢放下的速度</strong>。</li>
+        <li>最大力量仍以重的器材較有效；若長輩目標是「自己提 5 公斤米回家」，課程中段可改用 1.5 L 瓶、裝沙瓶或壺鈴型器材。</li>
+        <li>以上研究多數是 12 週以內、每週 2–3 次；社區課想看到變化，<strong>頻率與持續</strong>比器材重要。</li>
+      </ul>
+      <div class="rpe">
+        <div><b>3</b>很輕鬆<br>只是活動</div>
+        <div><b>5</b>有點感覺<br>還能聊天</div>
+        <div class="hit"><b>7</b>吃力<br>講話變短</div>
+        <div class="hit"><b>8</b>很吃力<br>再 2 下就不行</div>
+        <div><b>10</b>做不動<br>姿勢會跑掉</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="combo">
+  <div class="wrap">
+    <h2>上肢拿水瓶，下肢怎麼一起練</h2>
+    <p class="lead">防跌最需要的是大腿與臀部，但拿著瓶子自然偏向練手。解法不是把瓶子放下，而是<strong>每個上肢動作都配一個下肢動作</strong>。依長輩能力分三個層次：</p>
+    <div class="combo">
+      <div class="card">
+        <h3>坐姿：手動＋腿動</h3>
+        <p class="note">適合站不穩、坐輪椅、初次上課的長輩。椅子要穩，臀部坐前三分之一。</p>
+        <div class="pair"><span class="chip">肩上推</span><span class="plus">+</span><span class="chip o">坐姿抬膝踏步</span></div>
+        <div class="pair"><span class="chip">二頭彎舉</span><span class="plus">+</span><span class="chip o">單腳膝伸直停 3 秒</span></div>
+        <div class="pair"><span class="chip">側平舉</span><span class="plus">+</span><span class="chip o">雙腳腳跟抬起</span></div>
+        <div class="pair"><span class="chip">胸前推出</span><span class="plus">+</span><span class="chip o">膝蓋夾瓶（內收）</span></div>
+        <div class="pair"><span class="chip">瓶子抱胸</span><span class="plus">+</span><span class="chip o">身體前傾再坐直（坐姿硬舉）</span></div>
+      </div>
+      <div class="card">
+        <h3>坐站混合：以椅子為安全網</h3>
+        <p class="note">能站但怕跌的長輩。椅子放身後，隨時能坐回去；一手扶椅背也可以。</p>
+        <div class="pair"><span class="chip">瓶子抱胸</span><span class="plus">+</span><span class="chip o">坐到站、站到坐</span></div>
+        <div class="pair"><span class="chip">肩上推</span><span class="plus">+</span><span class="chip o">站起同時推上去</span></div>
+        <div class="pair"><span class="chip">雙手前平舉</span><span class="plus">+</span><span class="chip o">半蹲碰椅面</span></div>
+        <div class="pair"><span class="chip">單手提瓶</span><span class="plus">+</span><span class="chip o">扶椅側抬腿</span></div>
+        <div class="pair"><span class="chip">瓶子前後擺</span><span class="plus">+</span><span class="chip o">原地踏步有氧</span></div>
+      </div>
+      <div class="card">
+        <h3>站姿：整合全身</h3>
+        <p class="note">平衡良好、能自己走到據點的長輩。動作幅度小、速度慢，先求穩再求重。</p>
+        <div class="pair"><span class="chip">肩上推</span><span class="plus">+</span><span class="chip o">半蹲起立</span></div>
+        <div class="pair"><span class="chip">側平舉</span><span class="plus">+</span><span class="chip o">踮腳尖</span></div>
+        <div class="pair"><span class="chip">雙手提瓶</span><span class="plus">+</span><span class="chip o">側跨步、後跨步</span></div>
+        <div class="pair"><span class="chip">瓶子抱胸</span><span class="plus">+</span><span class="chip o">髖屈伸（臀部往後推）</span></div>
+        <div class="pair"><span class="chip">瓶子左右轉體</span><span class="plus">+</span><span class="chip o">重心左右移</span></div>
+      </div>
+    </div>
+    <div class="tip"><strong>課程排法：</strong>暖身（徒手律動 5 分鐘）→ 坐姿上下肢結合 2–3 個動作 → 坐站或站姿結合 2–3 個動作 → 手持水瓶的歌曲律動有氧 → 伸展緩和。每個肌力動作做 2–3 組，每組做到吃力為止，而不是固定 10 下。</div>
+  </div>
+</section>
+
+<section id="db">
+  <div class="wrap">
+    <h2>影片資料庫</h2>
+    <p class="lead">以下都是實際存在的 YouTube 影片與播放清單，涵蓋台灣、香港、日本與歐美。點縮圖可在頁面內播放；每支影片附「帶班筆記」說明怎麼用在社區課，也可以寫下自己的備註、收藏，或加入自己找到的影片。</p>
+
+    <div class="tools">
+      <input class="search" id="q" type="search" placeholder="搜尋：寶特瓶、坐姿、下肢、有氧、握力、日本…" aria-label="搜尋影片">
+      <div class="frow"><span class="lab">姿勢</span><div id="fPosture"></div></div>
+      <div class="frow"><span class="lab">目標</span><div id="fGoal"></div></div>
+      <div class="frow"><span class="lab">器材</span><div id="fEquip"></div></div>
+      <div class="frow"><span class="lab">語區</span><div id="fRegion"></div><span class="lab" style="margin-left:10px">長度</span><div id="fLen"></div></div>
+      <div class="frow">
+        <button class="fb o" id="favOnly">只看收藏</button>
+        <button class="fb" id="clearF">清除篩選</button>
+        <span class="count" id="count"></span>
+      </div>
+    </div>
+
+    <div class="vgrid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none">沒有符合的影片。試著清除一兩個篩選條件，或用下方表單加入你找到的影片。</div>
+
+    <div class="addbox">
+      <h3>＋ 加入自己找到的影片</h3>
+      <p class="note">貼上 YouTube 網址（一般影片、Shorts 或播放清單都可以），選好分類，就會出現在上面的資料庫，並保存在這台裝置的瀏覽器中。可用匯出／匯入把清單帶到別台電腦。</p>
+      <form id="addForm">
+        <div class="full"><label>YouTube 網址</label><input name="url" required placeholder="https://www.youtube.com/watch?v=…"></div>
+        <div class="full"><label>影片標題</label><input name="title" required placeholder="例：據點水瓶操 15 分鐘"></div>
+        <div><label>姿勢</label><select name="posture"><option>坐姿</option><option>站姿</option><option>坐站混合</option><option>臥姿</option></select></div>
+        <div><label>主要目標</label><select name="goal"><option>肌力</option><option>有氧律動</option><option>上下肢結合</option><option>握力與手部</option><option>暖身伸展</option></select></div>
+        <div><label>器材</label><select name="equip"><option>影片使用水瓶</option><option>影片使用啞鈴，可換水瓶</option><option>徒手或椅子，可加水瓶</option></select></div>
+        <div><label>語區</label><select name="region"><option>台灣</option><option>香港</option><option>日本</option><option>歐美</option><option>其他</option></select></div>
+        <div><label>長度</label><select name="len"><option>短片（5 分鐘內）</option><option>中片（5–15 分鐘）</option><option>長片（15 分鐘以上）</option><option>播放清單</option></select></div>
+        <div><label>頻道或來源</label><input name="channel" placeholder="例：某某據點"></div>
+        <div class="full"><label>帶班筆記</label><textarea name="note" rows="2" placeholder="這支影片適合用在課程哪個段落？要注意什麼？"></textarea></div>
+        <div class="full"><button class="btn" type="submit">加入資料庫</button></div>
+      </form>
+      <div class="io">
+        <button class="btn ghost" id="exportBtn">匯出我的影片與收藏</button>
+        <button class="btn ghost" id="importBtn">匯入</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="safe">
+  <div class="wrap">
+    <h2>帶水瓶課的安全提醒</h2>
+    <div class="grid2">
+      <div class="safe">
+        <h3>上課前</h3>
+        <ol>
+          <li>瓶蓋鎖緊，最好用膠帶再纏一圈；瓶身有水氣先擦乾，避免滑手。</li>
+          <li>椅子要穩、無滾輪；站姿動作時椅子放在身後或側邊當扶手。</li>
+          <li>有高血壓、心臟病史的長輩：動作時不要憋氣，用「出力時吐氣」口令。</li>
+          <li>肩膀疼痛者，肩上推改成手肘不超過肩高的「前平舉」。</li>
+        </ol>
+      </div>
+      <div class="safe">
+        <h3>上課中</h3>
+        <ol>
+          <li>每個動作先做 3 下示範速度，再開始算；放下的速度要比舉起慢。</li>
+          <li>觀察姿勢：聳肩、腰往後仰、膝蓋內夾，就是太重或太累，請他換小瓶或休息。</li>
+          <li>頭暈、胸悶、喘到說不出話，立刻坐下休息，不要勉強跟完影片。</li>
+          <li>站姿動作時提醒腳跟不要同時離地，除非動作本身就是踮腳尖。</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>設計者｜愛迪樂 鍾孟修 職能治療師</b><br>
+    本頁整理公開的 YouTube 影片與已發表研究供教學參考；影片版權屬原頻道所有。研究內容以摘要為準，應用於個別長輩前請依其身體狀況調整。
+  </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="mbox">
+    <div class="mhead"><h3 id="mTitle"></h3><a id="mLink" href="#" target="_blank" rel="noopener">在 YouTube 開啟</a><button class="mclose" id="mClose">關閉</button></div>
+    <div class="frame" id="mFrame"></div>
+    <div class="mhint">如果這裡播不出來（部分網站或裝置會擋外部影片），請點右上角「在 YouTube 開啟」。</div>
+  </div>
+</div>
+
+<script>
+/* ---------- 內建影片資料（皆為實際存在之 YouTube 影片） ---------- */
+const BUILT_IN = [
+ {id:"22OrKhqcKf0",type:"v",title:"長者輕鬆水樽運動（完整版）",channel:"升級教練 Lawrence Lai",region:"香港",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+  note:"整套用水樽，下身有原地快步行、蹲、髖外展，上身有肩上舉、肩外展、夾胸、夾背。是本資料庫最接近「水瓶＋上下肢結合」的範本，適合當整堂課的主幹。"},
+ {id:"T6lxOVduTI4",type:"v",title:"10 分鐘肌力訓練｜新手、老人運動｜全站立全身｜預防肌少症",channel:"1M6FIT",region:"台灣",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"影片說明直接寫「可搭配寶特瓶或啞鈴」。夾胸肩推、深蹲等動作節奏偏快，社區課建議把速度放慢一半、站在椅子前做。"},
+ {id:"oleckDQ49KE",type:"v",title:"20 分鐘全身雕塑｜壺鈴或寶特瓶｜全站立｜含暖身與伸展",channel:"1M6FIT",region:"台灣",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"長片（15 分鐘以上）",
+  note:"單一大瓶（1.5–2 L）的用法示範，適合體能較好的長輩或課程後段的進階組；蹲與推結合的動作多，老師可挑 3–4 個動作拆出來用。"},
+ {id:"IEjkfmvqIV8",type:"v",title:"靠寶特瓶 2 招免花錢鍛鍊握力肌｜劉燦宏醫師 X 李杰教練",channel:"早安健康",region:"台灣",posture:"坐姿",goal:["握力與手部"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+  note:"握力是 ICOPE 與肌少症篩檢的指標，這支用寶特瓶做手腕與前臂訓練，適合放在課程開頭 3 分鐘當「手部暖機」。"},
+ {id:"X9oDtVUhUB8",type:"v",title:"中高齡運動｜坐姿肌力運動｜上肢肌力訓練（20 分鐘）",channel:"居家運動系列",region:"台灣",posture:"坐姿",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"長片（15 分鐘以上）",
+  note:"整支坐著做的上肢肌力課，動作順序可直接套用；每個動作讓學員手持水瓶即可增加負荷。"},
+ {id:"JBlgmgeTJbg",type:"v",title:"中高齡運動｜下肢肌力訓練｜站姿肌力訓練（20 分鐘）",channel:"居家運動系列",region:"台灣",posture:"站姿",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"長片（15 分鐘以上）",
+  note:"有章節與安全提醒。站姿抬膝、蹲等動作，手持水瓶抱胸就能變成上下肢結合。"},
+ {id:"G-jYYCDmb-g",type:"v",title:"中高齡運動｜座椅下肢肌力訓練",channel:"居家運動系列",region:"台灣",posture:"坐姿",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
+  note:"坐著練大腿與小腿。把瓶子放在大腿上做膝伸直、或雙膝夾瓶，就是坐姿的下肢加負荷方式。"},
+ {id:"ldTnHnS6EDQ",type:"v",title:"年長者也能開始的啞鈴訓練｜從挑選重量到入門動作",channel:"YouTube 教練頻道",region:"台灣",posture:"坐站混合",goal:["肌力"],equip:"影片使用啞鈴，可換水瓶",len:"中片（5–15 分鐘）",
+  note:"重點在「怎麼挑重量」，老師看完可以把挑重量的原則翻譯成挑瓶子的原則（做 12–15 下會累就對了）。"},
+ {id:"nbgF_8kinjg",type:"v",title:"年長者的肌力訓練！三個初學者必做下肢動作",channel:"北木健身",region:"台灣",posture:"坐站混合",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
+  note:"只需一張椅子的三個下肢動作，講解清楚。學員熟練後，抱瓶做坐站就是最自然的進階。"},
+ {id:"Viygoxi77Fw",type:"v",title:"110 年運動月：樂齡族下肢肌力訓練",channel:"臺北市政府體育局",region:"台灣",posture:"坐站混合",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
+  note:"公部門製作、動作保守安全，適合當第一堂課的下肢基礎，之後再加瓶子。"},
+ {id:"7pIeSsndwbA",type:"v",title:"高齡者有氧運動健康操",channel:"臺北市政府衛生局（臺師大規劃）",region:"台灣",posture:"站姿",goal:["有氧律動"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
+  note:"有氧段落用：請學員手持小瓶（350–600 ml）跟著做，上肢在有氧時也有負荷。"},
+ {id:"9P8CDMj6qgw",type:"v",title:"銀髮族簡易運動",channel:"中國醫藥大學附設醫院 家庭醫學科",region:"台灣",posture:"坐站混合",goal:["暖身伸展","肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
+  note:"醫院製作的居家基礎動作，可當課程暖身或給家屬回家練習的參考。"},
+ {id:"fgxcywgq5JE",type:"v",title:"坐姿伸展有氧運動，12 分鐘鍛鍊全身",channel:"中高齡體育課",region:"台灣",posture:"坐姿",goal:["有氧律動","暖身伸展"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
+  note:"專為坐著運動設計、不是站姿的簡化版。節奏溫和，適合坐輪椅或體力差的據點當暖身。"},
+ {id:"HIFrlnbTRE8",type:"s",title:"一招練肌力與平衡：踮腳尖爬牆｜徐棟英 體適能教練",channel:"早安健康",region:"台灣",posture:"站姿",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"短片（5 分鐘內）",
+  note:"Shorts 短片，一分鐘學一招。雙手持瓶做踮腳尖，就是站姿「側平舉＋踮腳」的簡化版。"},
+ {id:"Q-7wBAa8JXI",type:"v",title:"7 分鐘有氧長者運動：椅上操",channel:"仁愛堂鄰舍中心（香港）",region:"香港",posture:"坐姿",goal:["有氧律動"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
+  note:"真實據點長者參與拍攝，7 分鐘長度剛好。手持小瓶跟做即可。"},
+ {id:"fw4XG2g_TQs",type:"v",title:"6 分鐘下肢肌力訓練（物理治療師教授）",channel:"仁愛堂鄰舍中心（香港）",region:"香港",posture:"坐站混合",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
+  note:"物理治療師用一張椅子帶下肢肌力與平衡，提醒累了就坐下。適合做為「坐站混合」層次的參考。"},
+ {id:"FUEycvXH3GA",type:"v",title:"活力長者健康操（衞生署長者健康服務）",channel:"香港衞生署",region:"香港",posture:"站姿",goal:["有氧律動","肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
+  note:"九式健康操，基礎版不需器材；心肺與下肢肌力並重，整套可當站姿課的骨架，上肢段落再加瓶子。"},
+ {id:"fZrqAcgXbi0",type:"v",title:"シニア向け ペットボトルで手軽に筋トレ【座って出来るダンベル体操】",channel:"スギリハ",region:"日本",posture:"坐姿",goal:["肌力"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+  note:"日本日照常用型：整支坐著、拿寶特瓶、附解說，可以直接播放讓長輩跟做。語言不通也能跟，老師在旁喊口令即可。"},
+ {id:"qmr4qFsWPC8",type:"v",title:"ペットボトルでかんたん体操",channel:"福岡市（城南区地域保健福祉課）",region:"日本",posture:"坐站混合",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+  note:"公部門製作，示範如何用瓶子調整強度。動作簡單、可延伸到全年齡，適合據點志工學習帶領。"},
+ {id:"Q86Us8l_ZZA",type:"v",title:"ペットボトルで筋力アップ体操",channel:"運動指導士 太田",region:"日本",posture:"坐站混合",goal:["肌力"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+  note:"主題就是「用可以自由調整重量的寶特瓶」做肌力。看它怎麼安排次數與組數，很適合對照本頁的研究說明。"},
+ {id:"CGZfAbwzuH8",type:"v",title:"［介護施設向け］座って出来る簡単な下肢トレーニング",channel:"日本理學療法士頻道",region:"日本",posture:"坐姿",goal:["肌力"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
+  note:"為機構團體體操設計，理學療法士考案。坐姿下肢動作加上大腿夾瓶、腳踝勾瓶，就能補足水瓶課的下肢量。"},
+ {id:"L4jl7AjmQ40",type:"v",title:"座りながら簡単エクササイズ！高齢者向け ウォーキング体操",channel:"日本高齢者体操頻道",region:"日本",posture:"坐姿",goal:["有氧律動","上下肢結合"],equip:"徒手或椅子，可加水瓶",len:"中片（5–15 分鐘）",
+  note:"坐姿走路操，上下肢同時動、有休息段落。手持瓶子就是坐姿有氧＋上肢負荷的現成版本。"},
+ {id:"6rDfFkU1aTA",type:"v",title:"高齢者 座ったまま うた体操 リズム体操（童謠唱歌版）",channel:"日本デイサービス体操頻道",region:"日本",posture:"坐姿",goal:["有氧律動"],equip:"徒手或椅子，可加水瓶",len:"長片（15 分鐘以上）",
+  note:"歌曲帶動的坐姿律動，有字幕與語音引導。概念可移植到台灣老歌：同樣的手部律動，請學員拿瓶子做。"},
+ {id:"x5OwdTWkaeQ",type:"v",title:"【ペットボトルで筋トレ】寝たままできる腕の伸展運動（呼吸器疾患向け）",channel:"日本大學保健醫療學部",region:"日本",posture:"臥姿",goal:["肌力"],equip:"影片使用水瓶",len:"短片（5 分鐘內）",
+  note:"理學療法士示範臥姿寶特瓶上肢訓練，給 COPD 等呼吸疾病穩定期者。適合居家服務或臥床個案的家屬參考。"},
+ {id:"ntDLjoJMHk8",type:"v",title:"20 Min Chair Exercises for Seniors（light dumbbells or water bottles）",channel:"HASfit",region:"歐美",posture:"坐姿",goal:["肌力","上下肢結合"],equip:"影片使用啞鈴，可換水瓶",len:"長片（15 分鐘以上）",
+  note:"官方說明建議用輕啞鈴或兩瓶水。動作本身就是上下肢結合的教科書：側平舉＋提踵、錘式彎舉＋踏步、交替膝伸直。"},
+ {id:"p4M-jdW9noQ",type:"v",title:"15 Minute Water Bottle Workout",channel:"YouTube 健身頻道",region:"歐美",posture:"站姿",goal:["肌力","上下肢結合"],equip:"影片使用水瓶",len:"中片（5–15 分鐘）",
+  note:"一般成人的站姿水瓶全身課，動作不適合直接給長輩，但可觀察「怎麼把下肢動作塞進上肢動作裡」的編排邏輯。"},
+ {id:"PLDqf6nfi4EaxI6JGaTVtQrviO-hMKpmNA",type:"p",title:"中高齡及初學者運動系列（播放清單）",channel:"YouTube 播放清單",region:"台灣",posture:"坐站混合",goal:["肌力","有氧律動"],equip:"徒手或椅子，可加水瓶",len:"播放清單",
+  note:"整個系列由老師帶領中高齡與初學者，可逐支挑選後加入本資料庫。"},
+ {id:"PLlzkSQoGCqe38G5cakyn0vLo5AefkZLj1",type:"p",title:"大人的樂活健康操（6 支高齡者運動教學影片）",channel:"國泰人壽 × 臺北市立大學活躍老化運動學院",region:"台灣",posture:"坐站混合",goal:["肌力","有氧律動","暖身伸展"],equip:"徒手或椅子，可加水瓶",len:"播放清單",
+  note:"肌力、柔軟度、心肺三類各有影片，由運動學院設計，適合建立課程結構後再加入水瓶負荷。"}
+];
+
+/* ---------- 狀態與儲存 ---------- */
+const LS = {fav:"bottle_fav", mine:"bottle_mine", notes:"bottle_notes", theme:"bottle_theme"};
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let favs=load(LS.fav,[]), mine=load(LS.mine,[]), notes=load(LS.notes,{});
+const state={q:"",posture:null,goal:null,equip:null,region:null,len:null,favOnly:false};
+
+const POSTURES=["坐姿","站姿","坐站混合","臥姿"];
+const GOALS=["肌力","有氧律動","上下肢結合","握力與手部","暖身伸展"];
+const EQUIPS=["影片使用水瓶","影片使用啞鈴，可換水瓶","徒手或椅子，可加水瓶"];
+const REGIONS=["台灣","香港","日本","歐美","其他"];
+const LENS=["短片（5 分鐘內）","中片（5–15 分鐘）","長片（15 分鐘以上）","播放清單"];
+
+function mkFilters(el,key,list){
+  const box=document.getElementById(el);
+  list.forEach(v=>{const b=document.createElement("button");b.type="button";b.className="fb";b.textContent=v;
+    b.onclick=()=>{state[key]=state[key]===v?null:v;render()};box.appendChild(b)});
+}
+mkFilters("fPosture","posture",POSTURES);mkFilters("fGoal","goal",GOALS);mkFilters("fEquip","equip",EQUIPS);
+mkFilters("fRegion","region",REGIONS);mkFilters("fLen","len",LENS);
+
+document.getElementById("q").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();render()});
+document.getElementById("favOnly").onclick=()=>{state.favOnly=!state.favOnly;render()};
+document.getElementById("clearF").onclick=()=>{Object.assign(state,{q:"",posture:null,goal:null,equip:null,region:null,len:null,favOnly:false});document.getElementById("q").value="";render()};
+
+function all(){return [...mine,...BUILT_IN]}
+function ytUrl(v){return v.type==="p"?`https://www.youtube.com/playlist?list=${v.id}`:v.type==="s"?`https://www.youtube.com/shorts/${v.id}`:`https://www.youtube.com/watch?v=${v.id}`}
+function thumb(v){return v.type==="p"?null:`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`}
+
+function render(){
+  const grid=document.getElementById("grid");grid.innerHTML="";
+  ["fPosture","fGoal","fEquip","fRegion","fLen"].forEach((id,i)=>{const key=["posture","goal","equip","region","len"][i];
+    [...document.getElementById(id).children].forEach(b=>b.classList.toggle("on",state[key]===b.textContent))});
+  document.getElementById("favOnly").classList.toggle("on",state.favOnly);
+  const list=all().filter(v=>{
+    if(state.favOnly&&!favs.includes(v.id))return false;
+    if(state.posture&&v.posture!==state.posture)return false;
+    if(state.goal&&!v.goal.includes(state.goal))return false;
+    if(state.equip&&v.equip!==state.equip)return false;
+    if(state.region&&v.region!==state.region)return false;
+    if(state.len&&v.len!==state.len)return false;
+    if(state.q){const h=[v.title,v.channel,v.note,v.region,v.posture,v.equip,...v.goal,notes[v.id]||""].join(" ").toLowerCase();if(!h.includes(state.q))return false}
+    return true});
+  document.getElementById("count").textContent=`顯示 ${list.length} 支，共 ${all().length} 支`;
+  document.getElementById("empty").style.display=list.length?"none":"block";
+  list.forEach(v=>{
+    const c=document.createElement("article");c.className="v";
+    const t=thumb(v);
+    c.innerHTML=`
+      <div class="thumb" data-id="${v.id}" role="button" tabindex="0" aria-label="播放 ${v.title}">
+        ${t?`<img src="${t}" alt="" loading="lazy" onerror="this.style.display='none'">`:""}
+        <div class="ph">${v.type==="p"?"播放清單":""}</div>
+        ${v.type==="s"?`<span class="dur">Shorts</span>`:""}
+        <span class="play">▶ 播放</span>
+      </div>
+      <div class="vb">
+        <h3>${v.title}</h3>
+        <div class="meta">${v.channel} ・ ${v.region}</div>
+        <div class="tags"><span class="tag p">${v.posture}</span>${v.goal.map(g=>`<span class="tag">${g}</span>`).join("")}<span class="tag e">${v.equip}</span><span class="tag e">${v.len}</span></div>
+        <div class="note"><strong>帶班筆記：</strong>${v.note}</div>
+        <textarea class="mynote" data-id="${v.id}" placeholder="我的備註（只存在這台裝置）">${notes[v.id]||""}</textarea>
+        <div class="vact">
+          <button class="fav ${favs.includes(v.id)?"on":""}" data-id="${v.id}">${favs.includes(v.id)?"已收藏":"收藏"}</button>
+          <a class="yt" href="${ytUrl(v)}" target="_blank" rel="noopener">在 YouTube 開啟</a>
+          ${mine.some(m=>m.id===v.id)?`<button class="del" data-id="${v.id}">移除</button>`:""}
+        </div>
+      </div>`;
+    grid.appendChild(c);
+  });
+  // placeholder text when thumbnail missing: show title initials
+  grid.querySelectorAll(".thumb").forEach(th=>{const img=th.querySelector("img");const ph=th.querySelector(".ph");
+    if(img){img.addEventListener("error",()=>{ph.textContent=th.getAttribute("aria-label").replace("播放 ","")})}
+  });
+}
+
+document.getElementById("grid").addEventListener("click",e=>{
+  const th=e.target.closest(".thumb");if(th){openVideo(th.dataset.id);return}
+  const f=e.target.closest(".fav");if(f){const id=f.dataset.id;favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];save(LS.fav,favs);render();return}
+  const d=e.target.closest(".del");if(d){if(confirm("移除這支自行加入的影片？")){mine=mine.filter(m=>m.id!==d.dataset.id);save(LS.mine,mine);render()}}
+});
+document.getElementById("grid").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.classList.contains("thumb"))openVideo(e.target.dataset.id)});
+document.getElementById("grid").addEventListener("input",e=>{if(e.target.classList.contains("mynote")){notes[e.target.dataset.id]=e.target.value;save(LS.notes,notes)}});
+
+/* ---------- 播放器 ---------- */
+const modal=document.getElementById("modal");
+function openVideo(id){
+  const v=all().find(x=>x.id===id);if(!v)return;
+  document.getElementById("mTitle").textContent=v.title;
+  document.getElementById("mLink").href=ytUrl(v);
+  const src=v.type==="p"?`https://www.youtube-nocookie.com/embed/videoseries?list=${v.id}`:`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0`;
+  document.getElementById("mFrame").innerHTML=`<iframe src="${src}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+  modal.classList.add("open");
+}
+function closeVideo(){modal.classList.remove("open");document.getElementById("mFrame").innerHTML=""}
+document.getElementById("mClose").onclick=closeVideo;
+modal.addEventListener("click",e=>{if(e.target===modal)closeVideo()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeVideo()});
+
+/* ---------- 新增影片 ---------- */
+function parseYT(url){
+  try{const u=new URL(url.trim());
+    const list=u.searchParams.get("list");if(list&&u.pathname.includes("playlist"))return {id:list,type:"p"};
+    if(u.pathname.startsWith("/shorts/"))return {id:u.pathname.split("/")[2],type:"s"};
+    if(u.hostname==="youtu.be")return {id:u.pathname.slice(1),type:"v"};
+    const v=u.searchParams.get("v");if(v)return {id:v,type:"v"};
+  }catch(e){}
+  return null;
+}
+document.getElementById("addForm").addEventListener("submit",e=>{
+  e.preventDefault();const f=new FormData(e.target);const p=parseYT(f.get("url"));
+  if(!p){alert("讀不出 YouTube 網址，請確認格式（watch?v=…、youtu.be/…、shorts/… 或 playlist?list=…）");return}
+  if(all().some(x=>x.id===p.id)){alert("這支影片已經在資料庫裡了");return}
+  mine.unshift({id:p.id,type:p.type,title:f.get("title"),channel:f.get("channel")||"自行加入",region:f.get("region"),posture:f.get("posture"),goal:[f.get("goal")],equip:f.get("equip"),len:f.get("len"),note:f.get("note")||"（自行加入）"});
+  save(LS.mine,mine);e.target.reset();render();document.getElementById("db").scrollIntoView();
+});
+document.getElementById("exportBtn").onclick=()=>{
+  const blob=new Blob([JSON.stringify({mine,favs,notes},null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="水瓶資料庫_我的清單.json";a.click();
+};
+document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
+document.getElementById("importFile").addEventListener("change",e=>{
+  const file=e.target.files[0];if(!file)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);
+    if(Array.isArray(d.mine)){d.mine.forEach(m=>{if(!all().some(x=>x.id===m.id))mine.push(m)})}
+    if(Array.isArray(d.favs)){favs=[...new Set([...favs,...d.favs])]}
+    if(d.notes&&typeof d.notes==="object"){notes={...notes,...d.notes}}
+    save(LS.mine,mine);save(LS.fav,favs);save(LS.notes,notes);render();alert("匯入完成")}catch(err){alert("檔案格式不正確")}};
+  r.readAsText(file);e.target.value="";
+});
+
+/* ---------- 主題 ---------- */
+const root=document.documentElement;
+function applyTheme(t){root.setAttribute("data-theme",t);document.getElementById("themeBtn").textContent=t==="dark"?"淺色":"深色";save(LS.theme,t)}
+applyTheme(load(LS.theme,"light"));
+document.getElementById("themeBtn").onclick=()=>applyTheme(root.getAttribute("data-theme")==="dark"?"light":"dark");
+
+render();
+</script>
+</body>
+</html>
