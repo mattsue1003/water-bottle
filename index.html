@@ -110,12 +110,22 @@ section{padding:56px 0}
 .plus{font-weight:900;color:var(--orange);font-size:1.3rem}
 
 /* database */
-.tools{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;position:sticky;top:calc(62px + env(safe-area-inset-top,0px));z-index:10}
-.search{width:100%;font-size:1.1rem;padding:12px 16px;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-family:inherit}
+.tools{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;position:sticky;top:calc(62px + env(safe-area-inset-top,0px));z-index:10;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tools .search{flex:1;min-width:220px;font-size:1rem;padding:9px 14px}
+.tools .count{margin-left:0}
+.ftoggle{border:1.5px solid var(--teal);background:var(--card);color:var(--teal-deep);border-radius:999px;padding:8px 16px;font-weight:700;white-space:nowrap}
+.ftoggle.on{background:var(--teal);color:#fff}
+.active{display:flex;gap:6px;flex-wrap:wrap;width:100%}
+.active:empty{display:none}
+.active .fb{padding:3px 12px;font-size:.9rem}
+.filters{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 18px 14px;margin-top:10px}
+.filters.hide{display:none}
+.search{width:100%;font-size:1rem;padding:9px 14px;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-family:inherit}
 .search:focus{outline:3px solid var(--amber);border-color:var(--amber)}
-.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.frow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+.frow>div{display:flex;flex-wrap:wrap;gap:6px}
 .frow .lab{font-weight:700;color:var(--teal-deep);margin-right:4px;white-space:nowrap}
-.fb{border:1.5px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:999px;padding:6px 14px;font-weight:500}
+.fb{border:1.5px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:999px;padding:4px 12px;font-weight:500;font-size:.95rem}
 .fb.on{background:var(--teal);border-color:var(--teal);color:#fff}
 .fb.on.o{background:var(--orange);border-color:var(--orange)}
 .count{margin-left:auto;color:var(--mute);font-size:.95rem;white-space:nowrap}
@@ -178,7 +188,7 @@ footer b{color:var(--ink-2)}
   .evc .lvl{flex-direction:row;flex-wrap:wrap}
   .rpe{grid-template-columns:repeat(5,1fr)}
   .rpe div{font-size:.8rem;padding:8px 4px}
-  .tools{position:static}
+  .tools{position:sticky}
   section{padding:40px 0}
   .nav{display:none}
 }
@@ -405,14 +415,19 @@ footer b{color:var(--ink-2)}
 
     <div class="tools">
       <input class="search" id="q" type="search" placeholder="搜尋：寶特瓶、坐姿、下肢、有氧、握力、日本…" aria-label="搜尋影片">
+      <button class="ftoggle on" id="ftoggle" type="button" aria-expanded="true">篩選條件 ▴</button>
+      <span class="count" id="count"></span>
+      <div class="active" id="active"></div>
+    </div>
+    <div class="filters" id="filters">
       <div class="frow"><span class="lab">姿勢</span><div id="fPosture"></div></div>
       <div class="frow"><span class="lab">目標</span><div id="fGoal"></div></div>
       <div class="frow"><span class="lab">器材</span><div id="fEquip"></div></div>
-      <div class="frow"><span class="lab">語區</span><div id="fRegion"></div><span class="lab" style="margin-left:10px">長度</span><div id="fLen"></div></div>
+      <div class="frow"><span class="lab">語區</span><div id="fRegion"></div></div>
+      <div class="frow"><span class="lab">長度</span><div id="fLen"></div></div>
       <div class="frow">
-        <button class="fb o" id="favOnly">只看收藏</button>
-        <button class="fb" id="clearF">清除篩選</button>
-        <span class="count" id="count"></span>
+        <button class="fb o" id="favOnly" type="button">只看收藏</button>
+        <button class="fb" id="clearF" type="button">清除篩選</button>
       </div>
     </div>
 
@@ -568,6 +583,13 @@ mkFilters("fRegion","region",REGIONS);mkFilters("fLen","len",LENS);
 
 document.getElementById("q").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();render()});
 document.getElementById("favOnly").onclick=()=>{state.favOnly=!state.favOnly;render()};
+const ft=document.getElementById("ftoggle"),fp=document.getElementById("filters");
+let fOpen=true;
+function setF(o){fOpen=o;fp.classList.toggle("hide",!o);ft.classList.toggle("on",o);ft.textContent=o?"篩選條件 ▴":"篩選條件 ▾";ft.setAttribute("aria-expanded",o)}
+ft.onclick=()=>setF(!fOpen);
+// 捲過篩選區後自動收起，讓影片占滿畫面
+let autoCollapsed=false;
+window.addEventListener("scroll",()=>{if(!autoCollapsed&&fOpen){const r=fp.getBoundingClientRect();if(r.bottom<60){setF(false);autoCollapsed=true}}},{passive:true});
 document.getElementById("clearF").onclick=()=>{Object.assign(state,{q:"",posture:null,goal:null,equip:null,region:null,len:null,favOnly:false});document.getElementById("q").value="";render()};
 
 function all(){return [...mine,...BUILT_IN]}
@@ -589,6 +611,9 @@ function render(){
     if(state.q){const h=[v.title,v.channel,v.note,v.region,v.posture,v.equip,...v.goal,notes[v.id]||""].join(" ").toLowerCase();if(!h.includes(state.q))return false}
     return true});
   document.getElementById("count").textContent=`顯示 ${list.length} 支，共 ${all().length} 支`;
+  const act=document.getElementById("active");act.innerHTML="";
+  [["posture","姿勢"],["goal","目標"],["equip","器材"],["region","語區"],["len","長度"]].forEach(([k,l])=>{if(state[k]){const b=document.createElement("button");b.className="fb on";b.type="button";b.textContent=`${state[k]} ×`;b.onclick=()=>{state[k]=null;render()};act.appendChild(b)}});
+  if(state.favOnly){const b=document.createElement("button");b.className="fb on o";b.type="button";b.textContent="只看收藏 ×";b.onclick=()=>{state.favOnly=false;render()};act.appendChild(b)}
   document.getElementById("empty").style.display=list.length?"none":"block";
   list.forEach(v=>{
     const c=document.createElement("article");c.className="v";
